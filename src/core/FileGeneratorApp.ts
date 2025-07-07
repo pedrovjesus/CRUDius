@@ -76,6 +76,9 @@ export class FileGeneratorApp {
     }
   }
 
+  /**
+   * Generates all standard application files
+   */
   public async generateDefaultFiles(): Promise<void> {
     const defaultFiles = [
       {

@@ -16,6 +16,9 @@ export class GenerationController {
     );
   }
 
+  /**
+   * File generation controller, responsible for receiving and handling data
+   */
   public async generate(req: IncomingMessage, res: ServerResponse) {
     let body = "";
 
@@ -34,6 +37,7 @@ export class GenerationController {
         }));
         await this.fileGenerator.generateDefaultFiles();
         await this.fileGenerator.generate(json.generationConfigs);
+        // Creates the routes for each entity
         await this.fileGenerator.generate(
           [
             {

@@ -5,6 +5,9 @@ import * as path from "path";
 interface TemplateData {
   [key: string]: any;
 }
+/**
+ * Handles template rendering
+ */
 class EjsTemplateRenderer {
   private fileManager: FileManager;
   private readonly templateBaseDir: string;
