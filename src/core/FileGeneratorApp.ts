@@ -14,6 +14,10 @@ export interface FileToGenerate {
   outputPath: string;
 }
 
+interface ExtraData {
+  entities: { name: string }[];
+}
+
 export interface GenerationConfig {
   entityName: string;
   properties: Property[];
@@ -35,7 +39,10 @@ export class FileGeneratorApp {
   /**
    * Generates all files based on the list of settings provided.
    */
-  public async generate(configs: GenerationConfig[]): Promise<void> {
+  public async generate(
+    configs: GenerationConfig[],
+    extraData?: ExtraData
+  ): Promise<void> {
     for (const config of configs) {
       const { entityName, properties, filesToGenerate } = config;
 
@@ -53,6 +60,7 @@ export class FileGeneratorApp {
         const data = {
           entityName,
           properties,
+          ...(extraData || {}),
         };
 
         try {

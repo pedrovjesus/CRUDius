@@ -1,0 +1,5 @@
+export interface <%= entityName %> {
+<% properties.forEach(prop => { -%>
+<%= prop.name %>: <%= prop.type %>;
+<% }) -%>
+}

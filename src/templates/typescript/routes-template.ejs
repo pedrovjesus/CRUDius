@@ -1,0 +1,25 @@
+import {Router } from 'express';
+
+<% entities.forEach(entity => { %>
+import { <%= entity.name %>Controller } from './../controllers';
+<% }); %>
+
+const router = Router();
+
+router.get('/', (_, res) => {
+return res.send('Default input');
+});
+
+<% entities.forEach(entity => { %>
+// rotas de <%= entity.name.toLowerCase() %>
+router.get('/<%= entity.name.toLowerCase() %>', <%= entity.name %>Controller.getAll);
+router.get('/<%= entity.name.toLowerCase() %>/:id', <%= entity.name %>Controller.getById);
+router.put('/<%= entity.name.toLowerCase() %>/:id', <%= entity.name %>Controller.updateById);
+router.delete('/<%= entity.name.toLowerCase() %>/:id', <%= entity.name %>Controller.deleteById);
+router.post('/<%= entity.name.toLowerCase() %>', <%= entity.name %>Controller.create);
+<% }); %>
+
+
+
+
+export { router }

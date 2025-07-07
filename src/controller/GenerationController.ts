@@ -28,9 +28,28 @@ export class GenerationController {
         if (!json.generationConfigs || !Array.isArray(json.generationConfigs)) {
           throw new Error("generationConfigs invalid or missing.");
         }
+
+        const entityNames = json.generationConfigs.map((cfg: any) => ({
+          name: cfg.entityName,
+        }));
         await this.fileGenerator.generateDefaultFiles();
         await this.fileGenerator.generate(json.generationConfigs);
-
+        await this.fileGenerator.generate(
+          [
+            {
+              entityName: "Routes",
+              properties: [],
+              filesToGenerate: [
+                {
+                  templateName: "routes-template",
+                  outputFileName: "routes.ts",
+                  outputPath: "src/routes",
+                },
+              ],
+            },
+          ],
+          { entities: entityNames }
+        );
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ message: "Files generated successfully!" }));
       } catch (err: any) {
