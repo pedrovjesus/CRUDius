@@ -1,7 +1,9 @@
-import app from "./app";
+import express from 'express';
+import { router } from './routes/routes';
+const server = express();
 
-const PORT = process.env.PORT || 3000;
+server.use(express.json());
 
-app.listen(PORT, () => {
-console.log(`🚀 Server is running on http://localhost:${PORT}`);
-});
+server.use(router);
+
+export { server };
