@@ -28,7 +28,7 @@ export class GenerationController {
         if (!json.generationConfigs || !Array.isArray(json.generationConfigs)) {
           throw new Error("generationConfigs invalid or missing.");
         }
-
+        await this.fileGenerator.generateDefaultFiles();
         await this.fileGenerator.generate(json.generationConfigs);
 
         res.writeHead(200, { "Content-Type": "application/json" });
