@@ -8,7 +8,7 @@ export class GenerationController {
   private readonly fileGenerator: FileGeneratorApp;
 
   constructor() {
-    this.templatesDir = path.join(__dirname, "..", "templates");
+    this.templatesDir = path.join(__dirname, "..", "templates", "typescript");
     this.outputDir = path.join(__dirname, "..", "..", "output");
     this.fileGenerator = new FileGeneratorApp(
       this.templatesDir,

@@ -1,0 +1,21 @@
+{
+  "name": "<%= name %>",
+  "version": "<%= version %>",
+  "description": "<%= description %>",
+  "main": "<%= main %>",
+  "scripts": {
+    "start": "<%= scripts.start %>",
+    "build": "<%= scripts.build %>",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+  },
+  "dependencies": {
+    <% Object.entries(dependencies).forEach(([key, version], i, arr) => { %>
+    "<%= key %>": "<%= version %>"<%= i < arr.length - 1 ? "," : "" %>
+    <% }) %>
+  },
+  "devDependencies": {
+    <% Object.entries(devDependencies).forEach(([key, version], i, arr) => { %>
+    "<%= key %>": "<%= version %>"<%= i < arr.length - 1 ? "," : "" %>
+    <% }) %>
+  }
+}
