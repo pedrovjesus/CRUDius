@@ -1,0 +1,456 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap");
+/* ====== VARIÁVEIS ====== */
+s h1 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  font-size: 3.9rem;
+}
+
+.h1_light {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+  font-size: 3.7rem;
+}
+
+h2 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+  font-size: 3.4rem;
+}
+
+h3 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+  font-size: 3rem;
+}
+
+h3 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+  font-size: 3rem;
+}
+
+h4 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 2.8rem;
+}
+
+h5 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 2.4rem;
+}
+
+h6 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 2rem;
+}
+
+p, body {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 1.9rem;
+}
+
+.body-small {
+  font-size: 1.6rem;
+}
+
+.body-large {
+  font: 2.2rem;
+}
+
+span, .caption {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 1.7rem;
+}
+
+.caption-small {
+  font-size: 1.4rem;
+}
+
+.caption-large {
+  font-size: 2rem;
+}
+
+button {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 1.9rem;
+}
+
+.button-small {
+  font-size: 1.6rem;
+}
+
+.button-large {
+  font-size: 2.2rem;
+}
+
+a {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 2rem;
+}
+
+.link-small {
+  font-size: 1.7rem;
+}
+
+.link-large {
+  font-size: 2.3rem;
+}
+
+label {
+  font-family: "Inter", sans-serif;
+  font-weight: 300;
+  font-size: 1.6rem;
+}
+
+.label-small {
+  font-size: 1.4rem;
+}
+
+.label-large {
+  font-size: 1.9rem;
+}
+
+/* ====== BODY/HTML/ROOT ====== */
+:root {
+  font-size: 65%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: 1.8rem;
+  background-color: #131313;
+  color: #F6F8FF;
+  caret-color: #5411E4;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #1C1C1C;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #5411E4;
+}
+
+::-moz-selection {
+  background-color: #9766FF;
+  color: #F6F8FF;
+}
+
+::selection {
+  background-color: #9766FF;
+  color: #F6F8FF;
+}
+
+/* ====== HEADER ====== */
+header {
+  height: 8rem;
+  background-color: #0F0F0F;
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  gap: 5rem;
+}
+header nav {
+  display: flex;
+  gap: 1.5rem;
+}
+header a {
+  color: #9766FF;
+  transition: all 0.5s;
+}
+header a:hover {
+  opacity: 70%;
+}
+
+/* ====== MAIN ====== */
+main.form {
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+main.form form {
+  margin-top: 15rem;
+  opacity: 100%;
+  transition: opacity 1s;
+  padding: 0 0 5rem 0;
+  background-color: #0F0F0F;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 51.6rem;
+  filter: drop-shadow(4px 4px 17.1px rgba(255, 255, 255, 0.45));
+}
+main.form form h1 {
+  margin-top: 3.1rem;
+  margin-bottom: 3.7rem;
+  text-align: center;
+}
+main.form form p {
+  margin-bottom: 3rem;
+}
+main.form form .providers {
+  width: 37.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+main.form form .groupBtns {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 24.8rem;
+  gap: 2rem;
+  margin-bottom: 3.5rem;
+}
+main.form form .groupBtns button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background-color: #1C1C1C;
+  padding: 0.5rem 0;
+  color: #F6F8FF;
+  transition: all 0.6s;
+}
+main.form form .groupBtns button img {
+  margin-right: 1rem;
+}
+main.form form .groupBtns button:hover {
+  opacity: 60%;
+  cursor: pointer;
+}
+main.form form .division {
+  margin-bottom: 3.5rem;
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+main.form form .division .line {
+  position: relative;
+  width: 100%;
+  height: 0.1rem;
+  background-color: #F6F8FF;
+  top: 0.9rem;
+}
+main.form form .division span {
+  z-index: 1;
+  display: block;
+  padding: 0 0.5rem 0 0.6rem;
+  background-color: #131313;
+}
+main.form form .inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 2.8rem;
+}
+main.form form label {
+  width: 27rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+main.form form label span {
+  position: relative;
+  left: 1rem;
+  top: 2.7rem;
+}
+main.form form label input {
+  transition: all 0.5s;
+  border: 1px solid #9766FF;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: #1C1C1C;
+  color: #F6F8FF;
+}
+main.form form label.focus span {
+  transition: all 0.5s;
+  top: -0.7rem;
+  left: 0rem;
+}
+main.form form .submit {
+  background-color: #7433FF;
+  color: #F6F8FF;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10rem;
+  height: 3.4rem;
+  padding-bottom: 0.2rem;
+  margin-top: 4rem;
+  transition: all 0.3s;
+}
+main.form form .submit:hover {
+  opacity: 70%;
+  cursor: pointer;
+}
+
+/* ====== FOOTER ====== */
+/* ====== MEDIA QUERY ====== */
+@media (max-width: 640px) {
+  :root {
+    font-size: 50% !important;
+  }
+  main.form {
+    padding: 0 1rem;
+  }
+  main.form form {
+    width: 100%;
+  }
+  main.form form p {
+    width: 80%;
+    text-align: center;
+  }
+  main.form form .groupBtns button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background-color: #1C1C1C;
+    padding: 0.5rem 0 0.6rem 0;
+    color: #F6F8FF;
+    transition: all 0.6s;
+    font-size: 2.2rem;
+  }
+  main.form form .groupBtns button img {
+    margin-right: 1rem;
+  }
+  main.form form .groupBtns button:hover {
+    opacity: 60%;
+    cursor: pointer;
+  }
+}
+@media (max-width: 400px) {
+  header {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 3rem !important;
+    flex-direction: column !important;
+    justify-content: space-around !important;
+    opacity: 99% !important;
+  }
+  header nav {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  form {
+    margin-top: 5rem !important;
+    opacity: 90% !important;
+    width: 100% !important;
+  }
+  form span {
+    left: 1rem;
+    top: 2.9rem !important;
+  }
+  form label.focus span {
+    transition: all 0.5s;
+    top: -0.7rem !important;
+    left: 0rem;
+  }
+  form .division {
+    margin-bottom: 2.5rem !important;
+  }
+}
+/* ====== COMPONENTES ====== */
+.blur {
+  z-index: 22;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: 50%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: 1s opacity;
+  /*=== HTML ===*/
+}
+.blur.none {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.ctr-modal {
+  transition: 0.7s all;
+  opacity: 100%;
+  position: absolute;
+  top: 4rem;
+  width: 100%;
+  left: 0;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+  /*=== HTML ===*/
+  /*=== JS ===*/
+}
+.ctr-modal .modal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 50rem;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: #131313;
+  color: #F6F8FF;
+  box-shadow: 0 0 5px #fff;
+}
+.ctr-modal .modal .ctr-notice {
+  width: 100%;
+}
+.ctr-modal .modal .ctr-notice .notice {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+.ctr-modal .modal .ctr-notice p {
+  font-size: 1.7rem;
+  font-weight: 300;
+  line-height: 2.5rem;
+}
+.ctr-modal .modal button {
+  background-color: #5411E4;
+  margin-top: 1rem;
+  border-radius: 1rem;
+  color: #F6F8FF;
+  padding: 0.3rem 0.7rem;
+  transition: 0.5s all;
+}
+.ctr-modal .modal button:hover {
+  opacity: 80%;
+  cursor: pointer;
+}
+.ctr-modal.close {
+  width: 0%;
+  opacity: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.ctr-modal.close button {
+  cursor: auto;
+}/*# sourceMappingURL=style.css.map */

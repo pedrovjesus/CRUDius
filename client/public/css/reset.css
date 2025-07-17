@@ -1,0 +1,69 @@
+@charset "UTF-8";
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+* {
+	text-decoration: none;
+	margin: 0;
+	padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    font-size: 65%;
+}
+
+body {
+    font-size: 1.8rem;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+div, section, body, aside, header, footer {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	line-height: 1;
+    margin: 0px;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+button {
+	padding: 0px;
+	background-color: blue;
+	border: none;
+}
+
+ul, ol {
+	margin: 0;
+}
+
+input:focus, textarea:focus {
+	outline: none;
+	border: 1px solid #007;
+}
+
+input {
+	padding: 0px;
+	outline: none;
+	border: none;
+}
+
+hr {
+	border-bottom: none;
+	border: none;
+	background-color: blue;
+	width: 100%;
+	height: 5px;
+}

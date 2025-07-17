@@ -1,0 +1,229 @@
+@charset "UTF-8";
+
+// font-family: "Rubik", sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+// font-family: 'Montserrat', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+// font-family: 'Inter', sans-serif;
+
+// 300 = light
+// 400 regular
+// 500 == medium
+// 600 == semi-bold
+// 700 == bold
+
+/* ====== VARIÁVEIS ====== */
+    // CORES
+        $primary--11: rgba(202, 116, 255, 1);
+        $primary--10: rgba(181, 97, 255, 1);
+        $primary--09: rgba(160, 77, 255, 1);
+        $primary--08: rgba(139, 58, 255, 1);
+        $primary--07: rgba(116, 38, 255, 1);
+        $primary--06: rgba(91, 14, 235, 1);
+        $primary--05: rgba(67, 0, 201, 1);
+        $primary--04: rgba(46, 0, 163, 1);
+        $primary--03: rgba(30, 0, 122, 1);
+        $primary--02: rgba(22, 0, 84, 1);
+        $primary--01: rgba(94, 0, 255, 1);
+        
+        $black--11: rgba(50, 50, 50, 1);
+        $black--10: rgba(46, 46, 46, 1);
+        $black--09: rgba(41, 41, 41, 1);
+        $black--08: rgba(37, 37, 37, 1);
+        $black--07: rgba(33, 33, 33, 1);
+        $black--06: rgba(28, 28, 28, 1);
+        $black--05: rgba(24, 24, 24, 1);
+        $black--04: rgba(20, 20, 20, 1);
+        $black--03: rgba(15, 15, 15, 1);
+        $black--02: rgba(7, 7, 7, 1);
+        $black--01: rgba(5, 5, 5, 1);
+
+        $white: rgba(255, 255, 255, 1);
+
+
+
+    // TIPOGRAFIA
+        h1, h2, h3, h4, h5, h6, 
+        caption, 
+        button, 
+        a, 
+        span, .caption {
+            font-family: "Rubik", sans-serif;
+        }
+
+        body,
+        p, 
+        label {
+            font-family: 'Inter', sans-serif;
+        }
+
+        // headings
+            
+            h1 {
+                font-weight: 700;
+                font-size: 5.8rem;
+            }
+
+
+            h2 {
+                font-weight: 600;
+                font-size: 5.1rem;
+            }
+
+            h3 {
+                font-weight: 600;
+                font-size: 4.5rem;
+            }
+
+            h3 {
+                font-weight: 600;
+                font-size: 4rem;
+            }
+
+            h4 {
+                font-weight: 500;
+                font-size: 3.5rem;
+            }
+
+            h5 {
+                font-weight: 500;
+                font-size: 2.4rem;
+            }
+
+            h6 {
+                font-weight: 500;
+                font-size: 2rem;
+            }
+
+        // body
+            p, body {
+                font-weight: 400;
+                font-size: 1.9rem;
+            }
+
+            .body-small {
+                font-size: 1.6rem;
+            }
+            
+            .body-large {   
+                font: 2.2rem;
+            }
+
+        // caption
+
+            span, .caption {
+                font-weight: 500;
+                font-size: 1.7rem;
+            }
+
+            .caption-small {
+                font-size: 1.4rem;
+            }
+
+            .caption-large {
+                font-size: 2rem;
+            }
+
+        // button
+
+            button {
+                font-weight: 500;
+                font-size: 1.9rem;
+            }
+
+            .button-small {
+                font-size: 1.6rem;
+            }
+
+            .button-large {
+                font-size: 2.2rem;
+            }
+
+        // link
+
+            a {
+                font-weight: 400;
+                font-size: 2rem;
+            }
+
+            .link-small {
+                font-size: 1.7rem;
+            }
+
+            .link-large {
+                font-size: 2.3rem;
+            }
+
+        // label
+
+            label {
+                font-weight: 300;
+                font-size: 1.6rem;
+            }
+
+            .label-small {
+                font-size: 1.4rem;
+            }
+
+            .label-large {
+                font-size: 1.9rem;
+            }
+
+/* ====== BODY/HTML/ROOT ====== */
+
+:root {
+    font-size: 65%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-size: 1.8rem;
+    background-color: $black--0;
+    color: $black--03;
+    caret-color: $black--05;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: $black--11;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: $black--06;
+}
+
+::selection {
+    background-color: $black--06;
+    color: $white
+
+/* ====== HEADER ====== */
+
+header {
+
+}
+
+/* ====== MAIN ====== */
+
+main {
+
+}
+
+/* ====== FOOTER ====== */
+
+footer {
+
+}
+
+/* ====== MEDIA QUERY ====== */
+@media (max-width: 640px) {
+
+}
+
+@media (max-width: 400px) {
+
+}
+
+/* ====== COMPONENTES ====== */
