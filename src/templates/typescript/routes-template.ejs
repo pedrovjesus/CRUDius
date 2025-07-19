@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 <% entities.forEach(entity => { %>
-import { <%= entity.name %>Controller } from './../controllers/<%= entity.name %>.controller';
+import { <%= entity.name %>Controller } from '../controllers/<%= entity.name %>/<%= entity.name %>.controller';
 const <%= entity.name.toLowerCase() %>Controller = new <%= entity.name %>Controller();
 <% }); %>
 
