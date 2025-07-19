@@ -37,6 +37,7 @@ export class GenerationController {
         }));
         await this.fileGenerator.generateDefaultFiles();
         await this.fileGenerator.generate(json.generationConfigs);
+        await this.fileGenerator.generateEntityFilesAutomatically(entityNames);
         // Creates the routes for each entity
         await this.fileGenerator.generate(
           [

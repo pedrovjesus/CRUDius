@@ -1,18 +1,18 @@
-import { <%= entity.name %> } from '../entities/<%= entity.name %>.entity';
+import { <%= entityName %> } from '../entities/<%= entityName %>.entity';
 
-export class <%= entity.name %>Service {
-  private entities: <%= entity.name %>[] = [];
+export class <%= entityName %>Service {
+  private entities: <%= entityName %>[] = [];
 
-  public getAll(): <%= entity.name %>[] {
+  public getAll(): <%= entityName %>[] {
     return this.entities;
   }
 
-  public getById(id: number): <%= entity.name %> | undefined {
+  public getById(id: number): <%= entityName %> | undefined {
     return this.entities.find(entity => entity.id === id);
   }
 
-  public create(entity: Omit<<%= entity.name %>, 'id'>): <%= entity.name %> {
-    const newEntity: <%= entity.name %> = {
+  public create(entity: Omit<<%= entityName %>, 'id'>): <%= entityName %> {
+    const newEntity: <%= entityName %> = {
       ...entity,
       id: this.generateId(),
     };
@@ -20,7 +20,7 @@ export class <%= entity.name %>Service {
     return newEntity;
   }
 
-  public updateById(id: number, updatedFields: Partial<<%= entity.name %>>): <%= entity.name %> | undefined {
+  public updateById(id: number, updatedFields: Partial<<%= entityName %>>): <%= entityName %> | undefined {
     const index = this.entities.findIndex(entity => entity.id === id);
     if (index !== -1) {
       this.entities[index] = { ...this.entities[index], ...updatedFields };

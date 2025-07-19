@@ -1,12 +1,12 @@
-import { <%= entity.name %>Service } from '../services/<%= entity.name %>.service';
+import { <%= entityName %>Service } from '../services/<%= entityName %>.service';
 import { Request, Response } from 'express';
-import { <%= entity.name %> } from '../entities/<%= entity.name %>.entity';
+import { <%= entityName %> } from '../entities/<%= entityName %>.entity';
 
-export class <%= entity.name %>Controller {
-  private service: <%= entity.name %>Service;
+export class <%= entityName %>Controller {
+  private service: <%= entityName %>Service;
 
   constructor() {
-    this.service = new <%= entity.name %>Service();
+    this.service = new <%= entityName %>Service();
   }
 
   public getAll(req: Request, res: Response): void {
@@ -25,14 +25,14 @@ export class <%= entity.name %>Controller {
   }
 
   public create(req: Request, res: Response): void {
-    const newEntity: <%= entity.name %> = req.body;
+    const newEntity: <%= entityName %> = req.body;
     this.service.create(newEntity);
     res.status(201).json(newEntity);
   }
 
   public updateById(req: Request, res: Response): void {
     const id = Number(req.params.id);
-    const updatedEntity: <%= entity.name %> = req.body;
+    const updatedEntity: <%= entityName %> = req.body;
     const entity = this.service.updateById(id, updatedEntity);
     if (entity) {
       res.json(entity);

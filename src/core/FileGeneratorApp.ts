@@ -53,8 +53,8 @@ export class FileGeneratorApp {
 
         const outputPath = path.join(
           this.outputBaseDir,
-          file.outputPath,
-          file.outputFileName
+          file.outputPath || `src/controllers/${entityName}`,
+          file.outputFileName || `${entityName}.controller.ts`
         );
 
         const data = {
@@ -137,6 +137,39 @@ export class FileGeneratorApp {
         );
         await this.fileManager.writeFile(outputFullPath, content);
       }
+    }
+  }
+
+    /**
+   * Generates controllers and services files
+   */
+  public async generateEntityFilesAutomatically(
+    entities: { name: string }[]
+  ): Promise<void> {
+    for (const entity of entities) {
+      await this.generate([
+        {
+          entityName: entity.name,
+          properties: [],
+          filesToGenerate: [
+            {
+              templateName: "controller-template",
+              outputFileName: `${entity.name}.controller.ts`,
+              outputPath: `src/controllers/${entity.name}`,
+            },
+            {
+              templateName: "service-template",
+              outputFileName: `${entity.name}.service.ts`,
+              outputPath: `src/services/${entity.name}`,
+            },
+            {
+              templateName: "entity-template",
+              outputFileName: `${entity.name}.entity.ts`,
+              outputPath: `src/entities/${entity.name}`,
+            },
+          ],
+        },
+      ]);
     }
   }
 }
