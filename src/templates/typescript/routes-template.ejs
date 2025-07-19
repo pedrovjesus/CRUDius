@@ -1,25 +1,23 @@
-import {Router } from 'express';
+import { Router } from 'express';
 
 <% entities.forEach(entity => { %>
-import { <%= entity.name %>Controller } from './../controllers';
+import { <%= entity.name %>Controller } from './../controllers/<%= entity.name %>.controller';
+const <%= entity.name.toLowerCase() %>Controller = new <%= entity.name %>Controller();
 <% }); %>
 
 const router = Router();
 
 router.get('/', (_, res) => {
-return res.send('Default input');
+  return res.send('Default input');
 });
 
 <% entities.forEach(entity => { %>
 // rotas de <%= entity.name.toLowerCase() %>
-router.get('/<%= entity.name.toLowerCase() %>', <%= entity.name %>Controller.getAll);
-router.get('/<%= entity.name.toLowerCase() %>/:id', <%= entity.name %>Controller.getById);
-router.put('/<%= entity.name.toLowerCase() %>/:id', <%= entity.name %>Controller.updateById);
-router.delete('/<%= entity.name.toLowerCase() %>/:id', <%= entity.name %>Controller.deleteById);
-router.post('/<%= entity.name.toLowerCase() %>', <%= entity.name %>Controller.create);
+router.get('/<%= entity.name.toLowerCase() %>', <%= entity.name.toLowerCase() %>Controller.getAll.bind(<%= entity.name.toLowerCase() %>Controller));
+router.get('/<%= entity.name.toLowerCase() %>/:id', <%= entity.name.toLowerCase() %>Controller.getById.bind(<%= entity.name.toLowerCase() %>Controller));
+router.put('/<%= entity.name.toLowerCase() %>/:id', <%= entity.name.toLowerCase() %>Controller.updateById.bind(<%= entity.name.toLowerCase() %>Controller));
+router.delete('/<%= entity.name.toLowerCase() %>/:id', <%= entity.name.toLowerCase() %>Controller.deleteById.bind(<%= entity.name.toLowerCase() %>Controller));
+router.post('/<%= entity.name.toLowerCase() %>', <%= entity.name.toLowerCase() %>Controller.create.bind(<%= entity.name.toLowerCase() %>Controller));
 <% }); %>
 
-
-
-
-export { router }
+export { router };

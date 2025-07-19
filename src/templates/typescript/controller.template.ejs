@@ -1,0 +1,53 @@
+import { <%= entity.name %>Service } from '../services/<%= entity.name %>.service';
+import { Request, Response } from 'express';
+import { <%= entity.name %> } from '../entities/<%= entity.name %>.entity';
+
+export class <%= entity.name %>Controller {
+  private service: <%= entity.name %>Service;
+
+  constructor() {
+    this.service = new <%= entity.name %>Service();
+  }
+
+  public getAll(req: Request, res: Response): void {
+    const entities = this.service.getAll();
+    res.json(entities);
+  }
+
+  public getById(req: Request, res: Response): void {
+    const id = Number(req.params.id);
+    const entity = this.service.getById(id);
+    if (entity) {
+      res.json(entity);
+    } else {
+      res.status(404).send('Entity not found');
+    }
+  }
+
+  public create(req: Request, res: Response): void {
+    const newEntity: <%= entity.name %> = req.body;
+    this.service.create(newEntity);
+    res.status(201).json(newEntity);
+  }
+
+  public updateById(req: Request, res: Response): void {
+    const id = Number(req.params.id);
+    const updatedEntity: <%= entity.name %> = req.body;
+    const entity = this.service.updateById(id, updatedEntity);
+    if (entity) {
+      res.json(entity);
+    } else {
+      res.status(404).send('Entity not found');
+    }
+  }
+
+  public deleteById(req: Request, res: Response): void {
+    const id = Number(req.params.id);
+    const success = this.service.deleteById(id);
+    if (success) {
+      res.status(204).send();
+    } else {
+      res.status(404).send('Entity not found');
+    }
+  }
+}
