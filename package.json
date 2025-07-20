@@ -12,7 +12,9 @@
     "start:watch": "tsx watch src/index.ts"
   },
   "dependencies": {
+    "@types/archiver": "^6.0.3",
     "@types/node": "^24.0.10",
+    "archiver": "^7.0.1",
     "ejs": "^3.1.10",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"

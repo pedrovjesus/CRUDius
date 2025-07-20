@@ -1,7 +1,5 @@
 import EjsTemplateRenderer from "../lib/EjsTemplateRenderer";
-import FileManager from "../lib/FileManager";
 import path from "path";
-import fs from "fs/promises";
 
 export interface Property {
   name: string;
@@ -24,16 +22,16 @@ export interface GenerationConfig {
   filesToGenerate: FileToGenerate[];
 }
 
+interface GeneratedFile {
+  path: string;
+  content: string;
+}
+
 export class FileGeneratorApp {
   private readonly renderer: EjsTemplateRenderer;
-  private readonly fileManager: FileManager;
 
-  constructor(
-    private readonly templatesDir: string,
-    private readonly outputBaseDir: string
-  ) {
+  constructor(private readonly templatesDir: string) {
     this.renderer = new EjsTemplateRenderer(templatesDir);
-    this.fileManager = new FileManager();
   }
 
   /**
@@ -42,7 +40,9 @@ export class FileGeneratorApp {
   public async generate(
     configs: GenerationConfig[],
     extraData?: ExtraData
-  ): Promise<void> {
+  ): Promise<GeneratedFile[]> {
+    const generatedFiles: GeneratedFile[] = [];
+
     for (const config of configs) {
       const { entityName, properties, filesToGenerate } = config;
 
@@ -51,8 +51,7 @@ export class FileGeneratorApp {
           ? file.templateName
           : `${file.templateName}.ejs`;
 
-        const outputPath = path.join(
-          this.outputBaseDir,
+        const relativePath = path.join(
           file.outputPath || `src/controllers/${entityName}`,
           file.outputFileName || `${entityName}.controller.ts`
         );
@@ -64,22 +63,23 @@ export class FileGeneratorApp {
         };
 
         try {
-          console.log(`🔧 Generating: ${outputPath} from ${templateFile}...`);
+          console.log(`🔧 Generating: ${relativePath} from ${templateFile}...`);
           const content = await this.renderer.render(templateFile, data);
-          await this.fileManager.writeFile(outputPath, content);
-          console.log(`✅ File saved: ${outputPath}`);
+          generatedFiles.push({ path: relativePath, content });
         } catch (error: any) {
-          console.error(`❌ Error generating ${outputPath}:`, error.message);
+          console.error(`❌ Error generating ${relativePath}:`, error.message);
           throw error;
         }
       }
     }
+
+    return generatedFiles;
   }
 
   /**
    * Generates all standard application files
    */
-  public async generateDefaultFiles(): Promise<void> {
+  public async generateDefaultFiles(): Promise<GeneratedFile[]> {
     const defaultFiles = [
       {
         templateName: "package-template.ejs",
@@ -120,34 +120,28 @@ export class FileGeneratorApp {
       },
     ];
 
+    const results: GeneratedFile[] = [];
+
     for (const file of defaultFiles) {
-      const outputFullPath = path.join(
-        this.outputBaseDir,
-        file.outputPath,
-        file.outputFileName
-      );
-      try {
-        await fs.access(outputFullPath);
-        console.log(`File already exists: ${outputFullPath}`);
-      } catch (error) {
-        console.log(`Generating default file: ${outputFullPath}`);
-        const content = await this.renderer.render(
-          file.templateName,
-          file.data
-        );
-        await this.fileManager.writeFile(outputFullPath, content);
-      }
+      const relativePath = path.join(file.outputPath, file.outputFileName);
+      console.log(`Generating default file: ${relativePath}`);
+      const content = await this.renderer.render(file.templateName, file.data);
+      results.push({ path: relativePath, content });
     }
+
+    return results;
   }
 
-    /**
+  /**
    * Generates controllers and services files
    */
   public async generateEntityFilesAutomatically(
     entities: { name: string }[]
-  ): Promise<void> {
+  ): Promise<GeneratedFile[]> {
+    const allFiles: GeneratedFile[] = [];
+
     for (const entity of entities) {
-      await this.generate([
+      const entityFiles = await this.generate([
         {
           entityName: entity.name,
           properties: [],
@@ -161,10 +155,13 @@ export class FileGeneratorApp {
               templateName: "service-template",
               outputFileName: `${entity.name}.service.ts`,
               outputPath: `src/services/${entity.name}`,
-            }
+            },
           ],
         },
       ]);
+      allFiles.push(...entityFiles);
     }
+
+    return allFiles;
   }
 }

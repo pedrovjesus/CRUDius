@@ -1,19 +1,13 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { FileGeneratorApp } from "../core/FileGeneratorApp";
 import path from "path";
+import archiver from "archiver";
 
 export class GenerationController {
   private readonly templatesDir: string;
-  private readonly outputDir: string;
-  private readonly fileGenerator: FileGeneratorApp;
 
   constructor() {
     this.templatesDir = path.join(__dirname, "..", "templates", "typescript");
-    this.outputDir = path.join(__dirname, "..", "..", "output");
-    this.fileGenerator = new FileGeneratorApp(
-      this.templatesDir,
-      this.outputDir
-    );
   }
 
   /**
@@ -32,14 +26,39 @@ export class GenerationController {
           throw new Error("generationConfigs invalid or missing.");
         }
 
+        const archive = archiver("zip", { zlib: { level: 9 } });
+
+        res.writeHead(200, {
+          "Content-Type": "application/zip",
+          "Content-Disposition": 'attachment; filename="generated.zip"',
+        });
+
+        archive.pipe(res);
+
+        const fileGenerator = new FileGeneratorApp(this.templatesDir);
+
+        const defaultFiles = await fileGenerator.generateDefaultFiles();
+        for (const file of defaultFiles) {
+          archive.append(file.content, { name: file.path });
+        }
+
+        for (const config of json.generationConfigs) {
+          const files = await fileGenerator.generate([config]);
+          for (const file of files) {
+            archive.append(file.content, { name: file.path });
+          }
+        }
+
         const entityNames = json.generationConfigs.map((cfg: any) => ({
           name: cfg.entityName,
         }));
-        await this.fileGenerator.generateDefaultFiles();
-        await this.fileGenerator.generate(json.generationConfigs);
-        await this.fileGenerator.generateEntityFilesAutomatically(entityNames);
-        // Creates the routes for each entity
-        await this.fileGenerator.generate(
+        const entityFiles =
+          await fileGenerator.generateEntityFilesAutomatically(entityNames);
+        for (const file of entityFiles) {
+          archive.append(file.content, { name: file.path });
+        }
+
+        const routeFiles = await fileGenerator.generate(
           [
             {
               entityName: "Routes",
@@ -55,8 +74,12 @@ export class GenerationController {
           ],
           { entities: entityNames }
         );
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: "Files generated successfully!" }));
+
+        for (const file of routeFiles) {
+          archive.append(file.content, { name: file.path });
+        }
+
+        await archive.finalize();
       } catch (err: any) {
         res.writeHead(500, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ error: err.message || "Unknown error" }));
