@@ -1,6 +1,6 @@
 # 🔧 CRUDius (Beta)
 
-Codegen CRUD Maker is a Node.js-based API designed to **automatically generate CRUD boilerplate code** using Express.js and TypeScript. It's aimed at accelerating the development of RESTful APIs by generating code from a JSON schema.
+Crudius is a Node.js-based API designed to **automatically generate CRUD boilerplate code** using Express.js and TypeScript. It's aimed at accelerating the development of RESTful APIs by generating code from a JSON schema.
 
 > ⚠️ This project is in **beta stage** and under active development.
 
