@@ -1,25 +1,9 @@
+import { IGenerationConfig } from "../interfaces/generationConfig";
 import EjsTemplateRenderer from "../lib/EjsTemplateRenderer";
 import path from "path";
 
-export interface Property {
-  name: string;
-  type: string;
-}
-
-export interface FileToGenerate {
-  templateName: string;
-  outputFileName: string;
-  outputPath: string;
-}
-
 interface ExtraData {
   entities: { name: string }[];
-}
-
-export interface GenerationConfig {
-  entityName: string;
-  properties: Property[];
-  filesToGenerate: FileToGenerate[];
 }
 
 interface GeneratedFile {
@@ -38,7 +22,7 @@ export class FileGeneratorApp {
    * Generates all files based on the list of settings provided.
    */
   public async generate(
-    configs: GenerationConfig[],
+    configs: IGenerationConfig[],
     extraData?: ExtraData
   ): Promise<GeneratedFile[]> {
     const generatedFiles: GeneratedFile[] = [];
