@@ -6,11 +6,6 @@ interface ExtraData {
   entities: { name: string }[];
 }
 
-interface GeneratedFile {
-  path: string;
-  content: string;
-}
-
 export class FileGeneratorApp {
   private readonly renderer: EjsTemplateRenderer;
 
