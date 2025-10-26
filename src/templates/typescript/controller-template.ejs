@@ -1,6 +1,6 @@
-import { <%= entityName %>Service } from '../../services/<%= entityName %>/<%= entityName %>.service';
+import { <%= entityName %>Service } from '../../services/<%= entityName %>/<%= entityName %>.service<%= extension %>';
 import { Request, Response } from 'express';
-import { <%= entityName %> } from '../../entities/<%= entityName %>.entity';
+import { <%= entityName %> } from '../../entities/<%= entityName %>.entity<%= extension %>';
 
 export class <%= entityName %>Controller {
   private service: <%= entityName %>Service;

@@ -1,14 +1,14 @@
 import { Router } from 'express';
 
 <% entities.forEach(entity => { %>
-import { <%= entity.name %>Controller } from '../controllers/<%= entity.name %>/<%= entity.name %>.controller';
+import { <%= entity.name %>Controller } from '../controllers/<%= entity.name %>/<%= entity.name %>.controller<%= entity.extension %>';
 const <%= entity.name.toLowerCase() %>Controller = new <%= entity.name %>Controller();
 <% }); %>
 
 const router = Router();
 
 router.get('/', (_, res) => {
-  return res.send('Default input');
+return res.send('Default input');
 });
 
 <% entities.forEach(entity => { %>
