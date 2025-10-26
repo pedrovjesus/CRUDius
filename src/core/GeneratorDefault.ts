@@ -71,6 +71,11 @@ export class GeneratorDefault {
     return [];
   }
 
+  /**
+   * 
+   * @param files 
+   * @returns return files generate basead at script
+   */
   private async generateDefaultFiles(files: any[]): Promise<GeneratedFile[]> {
     const results: GeneratedFile[] = [];
 
