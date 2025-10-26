@@ -1,14 +1,14 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { GenerationController } from "../controller/GenerationController";
 
-const generationController = new GenerationController();
+const generationController = new GenerationController("typescript");
 
 export async function handleRequest(
   req: IncomingMessage,
   res: ServerResponse
 ): Promise<void> {
   if (req.method === "POST" && req.url === "/generate") {
-    return generationController.generate(req, res);
+    return generationController.generateTypescript(req, res);
   }
 
   if (req.method === "GET" && req.url === "/") {

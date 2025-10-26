@@ -30,7 +30,11 @@ export class FileGeneratorApp {
           ? file.templateName
           : `${file.templateName}.ejs`;
 
-        const fileName = `${file.outputFileName}${file.extension || ".ts"}`;
+        const extension = file.extension || ".ts";
+
+        const fileName = file.outputFileName.endsWith(extension)
+          ? file.outputFileName
+          : file.outputFileName + extension;
 
         const relativePath = path.join(
           file.outputPath || `src/controllers/${entityName}`,
@@ -40,6 +44,7 @@ export class FileGeneratorApp {
         const data = {
           entityName,
           properties,
+          extension,
           ...(extraData || {}),
         };
 

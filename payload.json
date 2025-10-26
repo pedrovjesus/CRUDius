@@ -1,0 +1,14 @@
+{
+  "generationConfigs": [
+    {
+      "entityName": "Product",
+      "properties": [
+        { "name": "id", "type": "number", "primary": true },
+        { "name": "name", "type": "string" },
+        { "name": "price", "type": "number" },
+        { "name": "description", "type": "string", "optional": true }
+      ],
+      "filesToGenerate": []
+    }
+  ]
+}
