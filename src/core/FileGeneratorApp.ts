@@ -1,4 +1,4 @@
-import { IGenerationConfig } from "../interfaces/generationConfig";
+import { IGenerationConfig } from "../interfaces/generationConfig.interface";
 import EjsTemplateRenderer from "../lib/EjsTemplateRenderer";
 import path from "path";
 
