@@ -49,7 +49,6 @@ export class FileGeneratorApp {
         };
 
         try {
-          console.log(`🔧 Generating: ${relativePath} from ${templateFile}...`);
           const content = await this.renderer.render(templateFile, data);
           generatedFiles.push({ path: relativePath, content });
         } catch (error: any) {
