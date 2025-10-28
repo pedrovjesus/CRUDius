@@ -4,6 +4,8 @@ import path from "path";
 import archiver from "archiver";
 import { GeneratorDefault } from "../core/GeneratorDefault";
 import { EntityFileGenerator } from "../core/EntityFileGenerator";
+import { RootConfig } from "../interfaces/rootConfig.interface";
+import { Validator } from "../lib/Validator";
 
 export class GenerationController {
   private readonly templatesDir: string;
@@ -22,13 +24,15 @@ export class GenerationController {
 
     req.on("end", async () => {
       try {
-        const json = JSON.parse(body);
 
-        if (!json.generationConfigs || !Array.isArray(json.generationConfigs)) {
-          throw new Error("generationConfigs invalid or missing.");
+        const json: RootConfig = JSON.parse(body);
+        const validationResult = await Validator.IsValidRootConfig(json);
+        
+        if (validationResult !== true) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          return res.end(JSON.stringify({ error: validationResult }));
         }
 
-        // Criar arquivo zip
         const archive = archiver("zip", { zlib: { level: 9 } });
         res.writeHead(200, {
           "Content-Type": "application/zip",
@@ -36,18 +40,15 @@ export class GenerationController {
         });
         archive.pipe(res);
 
-        // Instanciar geradores
         const fileGenerator = new FileGeneratorApp(this.templatesDir);
         const defaultGenerator = new GeneratorDefault(this.templatesDir);
         const entityGenerator = new EntityFileGenerator(fileGenerator);
 
-        // 1️⃣ Gerar arquivos default
         const defaultFiles = await defaultGenerator.generateTypescript();
         defaultFiles.forEach((file) =>
           archive.append(file.content, { name: file.path })
         );
 
-        // 2️⃣ Gerar arquivos das configs enviadas
         for (const config of json.generationConfigs) {
           const files = await fileGenerator.generate([config]);
           files.forEach((file) =>
@@ -55,7 +56,6 @@ export class GenerationController {
           );
         }
 
-        // 3️⃣ Gerar arquivos de entidades automaticamente
         const entityNames = json.generationConfigs.map((cfg: any) => ({
           name: cfg.entityName,
           extension: ".ts",
@@ -65,7 +65,6 @@ export class GenerationController {
           archive.append(file.content, { name: file.path })
         );
 
-        // 4️⃣ Gerar arquivos de rotas
         const routeFiles = await fileGenerator.generate(
           [
             {
@@ -87,7 +86,6 @@ export class GenerationController {
           archive.append(file.content, { name: file.path })
         );
 
-        // Finalizar zip
         await archive.finalize();
       } catch (err: any) {
         res.writeHead(500, { "Content-Type": "application/json" });

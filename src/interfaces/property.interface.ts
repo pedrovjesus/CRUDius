@@ -1,4 +1,7 @@
 export interface IProperty {
-  name: string;
-  type: string;
+  field: string;
+  type: "string" | "number" | "boolean"
+  isOptional?: boolean;
+  primary?: boolean;
+  required?: boolean;
 }
