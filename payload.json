@@ -3,12 +3,13 @@
     {
       "entityName": "Product",
       "properties": [
-        { "name": "id", "type": "number", "primary": true },
-        { "name": "name", "type": "string" },
-        { "name": "price", "type": "number" },
-        { "name": "description", "type": "string", "optional": true }
+        { "field": "id", "type": "number", "primary": true },
+        { "field": "field", "type": "string" },
+        { "field": "price", "type": "number" },
+        { "field": "description", "type": "string", "optional": true }
       ],
       "filesToGenerate": []
     }
   ]
 }
+

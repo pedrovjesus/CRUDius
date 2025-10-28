@@ -1,5 +1,10 @@
 # 🔧 CRUDius (Beta)
 
+<p align="center">
+  <img src="./assets/crudius1.svg" alt="Logo do Projeto" width="180"/>
+</p>
+
+
 Crudius is a Node.js-based API designed to **automatically generate CRUD boilerplate code** using Express.js and TypeScript. It's aimed at accelerating the development of RESTful APIs by generating code from a JSON schema.
 
 > ⚠️ This project is in **beta stage** and under active development.
@@ -109,6 +114,6 @@ You can extract the zip, install dependencies, and immediately run the project o
 
 ## 📄 License
 
-MIT © [Pedro Jesus](https://github.com/pedrovjesus)
+[MIT](./LICENSE.md) © [Pedro Jesus](https://github.com/pedrovjesus)
 
 
