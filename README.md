@@ -1,7 +1,7 @@
 # 🔧 CRUDius (Beta)
 
 <p align="center">
-  <img src="./assets/crudius1.svg" alt="Logo do Projeto" width="180"/>
+  <img src="./assets/crudius1.png" alt="Logo do Projeto" width="180"/>
 </p>
 
 
