@@ -1,14 +1,15 @@
-# 🔧 CRUDius (Beta)
+# 🔧 CRUDius (Alpha)
 
 <p align="center">
   <img src="./assets/crudius1.png" alt="Logo do Projeto" width="180"/>
 </p>
 
 
-Crudius is a Node.js-based API designed to **automatically generate CRUD boilerplate code** using Express.js and TypeScript. It's aimed at accelerating the development of RESTful APIs by generating code from a JSON schema.
+Crudius is a Node.js-based API designed to **automatically generate CRUD boilerplate code**. It's aimed at accelerating the development of RESTful APIs by generating code from a JSON schema.
 
-> ⚠️ This project is in **beta stage** and under active development.
+> ⚠️ This project is in **Alpha stage** and under active development.
 
+With CRUDius, you can build a full backend MVP in seconds, giving you freedom to focus on the frontend or other parts of your project.
 ---
 
 ## 📦 Features
@@ -103,14 +104,20 @@ You can extract the zip, install dependencies, and immediately run the project o
 
 ---
 
-## 🧪 Future Improvements
-
-- Support for relational fields (foreign keys)
-- Option to choose between Express or NestJS
+## Future Improvements
+- Option to choose between Typescript (Express), Php, Java, Python
 - Optional Swagger documentation generation
 - Integration with database migration tools
 
+## Next steps
+- Build CLI tool for local code generation
+- Support for relational fields (foreign keys)
+
 ---
+## Why CRUDius?
+- Rapid MVP development for clients
+- Focus on frontend or business logic instead of boilerplate
+- Consistent project structure ready to run immediately
 
 ## 📄 License
 
