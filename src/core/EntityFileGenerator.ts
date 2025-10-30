@@ -1,13 +1,11 @@
 import { FileGeneratorApp } from "./FileGeneratorApp";
+import { IProperty } from "../interfaces/property.interface";
 
 export class EntityFileGenerator {
   constructor(private fileGenerator: FileGeneratorApp) {}
 
-  /**
-   * Generates entity files (controller, service, entity) according to the specified extension
-   */
   public async generateEntities(
-    entities: { name: string; extension?: string }[]
+    entities: { name: string; extension?: string; properties: IProperty[] }[]
   ): Promise<GeneratedFile[]> {
     const allFiles: GeneratedFile[] = [];
 
@@ -17,7 +15,7 @@ export class EntityFileGenerator {
       const entityFiles = await this.fileGenerator.generate([
         {
           entityName: entity.name,
-          properties: [],
+          properties: entity.properties,
           filesToGenerate: [
             {
               templateName: "controller-template",

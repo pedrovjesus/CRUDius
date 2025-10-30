@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { GenerationController } from "../controller/GenerationController";
 
-const generationController = new GenerationController("typescript");
+const generationController = new GenerationController();
 
 export async function handleRequest(
   req: IncomingMessage,

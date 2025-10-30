@@ -3,6 +3,11 @@ import { IProperty } from "../interfaces/property.interface";
 import { RootConfig } from "../interfaces/rootConfig.interface";
 
 export class Validator {
+  /**
+   * Validates a property object.
+   * @param property 
+   * @returns validation property result
+   */
   private static async IsValidProperty(
     property: IProperty
   ): Promise<string | boolean> {
@@ -18,6 +23,11 @@ export class Validator {
     return true;
   }
 
+  /**
+   * 
+   * @param config 
+   * @returns validade entity
+   */
   public static async IsValidGenerationConfig(
     config: IGenerationConfig
   ): Promise<string | boolean> {

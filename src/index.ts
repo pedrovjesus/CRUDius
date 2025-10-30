@@ -1,7 +1,4 @@
 import App from "./app";
-import EjsTemplateRenderer from "./lib/EjsTemplateRenderer";
-import FileManager from "./lib/FileManager";
-import * as path from "path";
 
 interface GenerationOptions {
   templateName: string;
