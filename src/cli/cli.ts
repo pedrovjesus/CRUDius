@@ -2,6 +2,7 @@
 import { Command } from "commander";
 import { runInit } from "./commands/init";
 import { runInitJson } from "./commands/init-json";
+import { runClean } from "./commands/clean";
 
 const program = new Command();
 
@@ -22,5 +23,10 @@ program
   .description("Generate a base JSON config for CRUD setup")
   .action(runInitJson);
 
-  
+// Comando: crudius clean
+program
+  .command("clean")
+  .description("Remove generated files and output artifacts")
+  .action(runClean);
+
 program.parse(process.argv);
