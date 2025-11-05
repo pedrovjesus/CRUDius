@@ -1,126 +1,166 @@
-# 🔧 CRUDius (Alpha)
+# CRUDius CLI
 
 <p align="center">
-  <img src="./assets/crudius1.png" alt="Logo do Projeto" width="180"/>
+  <img src="./assets/crudius1.png" alt="Crudius Logo" width="140"/>
 </p>
 
+**CRUDius** is a **tool** built with **Node.js** and **TypeScript** that helps you automatically generate CRUD boilerplate code based on interactive prompts or a JSON configuration.
 
-Crudius is a Node.js-based API designed to **automatically generate CRUD boilerplate code**. It's aimed at accelerating the development of RESTful APIs by generating code from a JSON schema.
-
-> ⚠️ This project is in **Alpha stage** and under active development.
-
-With CRUDius, you can build a full backend MVP in seconds, giving you freedom to focus on the frontend or other parts of your project.
----
-
-## 📦 Features
-
-- Input your entity schema via JSON
-- Generate RESTful CRUD endpoints (Create, Read, Update, Delete)
-- Output includes:
-  - `index.ts`
-  - `routes.ts`
-  - `controllers.ts`
-  - `database.ts`
-  - `README.md`
-- Zips the output for easy download
+Currently in **under development**, CRUDius aims to accelerate backend development by providing a fast way to scaffold standard CRUD code with minimal setup.
 
 ---
 
-## 🚀 Getting Started
+## Features
 
-### 1. Clone the Repository
+* Interactive setup wizard (`crudius init`)
+* JSON-based configuration generation (`crudius init-json`)
+* Configuration validation (`crudius validate`)
+* Clean command for removing temporary files (`crudius clean`)
+* Generates a ready-to-use `.zip` with all source code
+* Written entirely in TypeScript for flexibility and future extensibility
+
+> Support for languages (python, php) and databases (e.g. Knex, Prisma, MongoDB) is **planned**, but not yet included in this version.
+
+---
+
+## Installation
+
+Since this project is not yet published to npm, you can install it locally for development and testing.
 
 ```bash
 git clone https://github.com/pedrovjesus/CRUDius.git
 cd CRUDius
-```
-
-### 2. Install Dependencies
-
-```bash
 npm install
+npm run build
+npm link
 ```
 
-### 3. Run the Server
-
-```bash
-npm run start
-```
-
-By default, the server runs at:
-`http://localhost:3000`
+This will make the `crudius` command available globally on your system.
 
 ---
 
-## 📤 Sending a Request
+## Usage
 
-You can generate code by sending a `POST` request to `/generate` with a JSON schema.
+### Initialize a new project interactively
 
-### Example Payload
+```bash
+crudius init
+```
 
-Create a file named `payload.json`:
+This command walks you through an interactive setup process to define your entities and their fields.
+
+Example session:
+
+```
+Entity name: Product
+Field name: name
+Field type: string
+Add another field? Yes
+Field name: price
+Field type: number
+Add another field? No
+```
+
+At the end, a configuration file named `crudius.config.json` is generated, and you can optionally generate the project code immediately.
+
+---
+
+### Generate from an existing configuration
+
+```bash
+crudius init-json
+```
+
+This uses an existing configuration file to generate code directly.
+
+**Example:**
 
 ```json
 {
-  "entity": "Product",
-  "fields": [
-    { "name": "id", "type": "number", "primary": true },
-    { "name": "name", "type": "string" },
-    { "name": "price", "type": "number" },
-    { "name": "description", "type": "string", "optional": true }
+  "generationConfigs": [
+    {
+      "entityName": "User",
+      "properties": [
+        { "field": "id", "type": "number", "primary": true },
+        { "field": "name", "type": "string" },
+        { "field": "email", "type": "string" }
+      ]
+    }
   ]
 }
 ```
 
-### Send the Request (PowerShell)
+---
 
-```powershell
-Invoke-WebRequest `
-  -Uri http://localhost:3000/generate `
-  -Method POST `
-  -ContentType "application/json" `
-  -InFile .\payload.json `
-  -OutFile .\generated.zip
+### Validate a configuration file
+
+```bash
+crudius validate
 ```
 
-This will download a `generated.zip` file containing your full CRUD boilerplate code.
+Validates your `crudius.config.json` structure using the built-in validator before attempting code generation.
 
 ---
 
-## 🛠 Output Structure
+### Clean generated files
 
-The ZIP includes:
+```bash
+crudius clean
+```
+
+Removes generated files (e.g. `crudius.config.json` and `crudius-output.zip`).
+
+---
+
+## Command Reference
+
+| Command             | Description                              |
+| ------------------- | ---------------------------------------- |
+| `crudius init`      | Start interactive CRUD setup             |
+| `crudius init-json` | Generate CRUD structure from JSON config |
+| `crudius validate`  | Validate existing configuration          |
+| `crudius clean`     | Remove generated and temporary files     |
+
+---
+
+## Output Structure
+
+When generation is complete, a file named `crudius-output.zip` will be created with the following structure:
 
 ```
 /src
   ├── controllers/
   ├── routes/
-  ├── entites/
+  ├── entities/
   └── index.ts
 README.md
 ```
 
-You can extract the zip, install dependencies, and immediately run the project or plug it into your larger system.
+The generated files currently follow a **generic boilerplate** structure in TypeScript.
+Database and framework integration (e.g. Express + Knex) will be introduced in future versions.
 
 ---
 
-## Future Improvements
-- Option to choose between Typescript (Express), Php, Java, Python
-- Optional Swagger documentation generation
-- Integration with database migration tools
+## Roadmap
 
-## Next steps
-- Build CLI tool for local code generation
-- Support for relational fields (foreign keys)
+**Upcoming Features**
+
+* Add support for Express + Knex integration
+* Add relation handling (foreign keys)
+* Expand language support (PHP, Python)
+* Optional Swagger/OpenAPI documentation
 
 ---
+
 ## Why CRUDius?
-- Rapid MVP development for clients
-- Focus on frontend or business logic instead of boilerplate
-- Consistent project structure ready to run immediately
 
-## 📄 License
+* Rapid backend prototyping
+* Consistent project structure
+* Fully local, no server or internet required
+* Ideal for generating early MVP backends
+
+---
+
+## License
 
 [MIT](./LICENSE.md) © [Pedro Jesus](https://github.com/pedrovjesus)
-
-
