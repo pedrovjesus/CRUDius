@@ -1,48 +1,50 @@
-import fs from "fs";
+import fs, { createWriteStream } from "fs";
 import chalk from "chalk";
 import { runValidate } from "./validate";
 import { GenerationService } from "../../core/GenerationService";
 import { RootConfig } from "../../interfaces/rootConfig.interface";
-import { createWriteStream } from "fs";
+import { validateConfig } from "../utils/validateConfig";
 
 /**
  * Command: crudius generate
  * Reads configuration and generates the CRUD boilerplate ZIP
  */
-export async function runGenerate() {
+
+export async function runGenerate(): Promise<void> {
   console.log(
-    chalk.blueBright.bold("⚙️  Generating code from configuration...\n")
+    chalk.blueBright.bold("Generating code from configuration...\n")
   );
-  await runValidate();
 
-  const configPath = "crudius.config.json";
-
-  if (!fs.existsSync(configPath)) {
+  const isValid = await validateConfig();
+  if (!isValid) {
     console.log(
-      chalk.redBright("Configuration not found: crudius.config.json\n")
+      chalk.redBright("Aborting generation due to invalid config.\n")
     );
-    console.log(chalk.yellow("Run `crudius init` to create one.\n"));
     return;
   }
 
+  const outputPath = "crudius-output.zip";
+  const output = createWriteStream(outputPath);
+  const generator = new GenerationService("typescript");
+
   try {
-    const rawData = fs.readFileSync(configPath, "utf-8");
-    const config: RootConfig = JSON.parse(rawData);
-    const output = createWriteStream("crudius-output.zip");
-    const generator = new GenerationService("typescript");
-
     console.log(chalk.cyan(" Generating archive..."));
-
-    await generator.generateArchive(config, output);
-
+    await generator.generateArchive(
+      JSON.parse(fs.readFileSync("crudius.config.json", "utf-8")),
+      output
+    );
     console.log(chalk.greenBright("\n Code generated successfully!"));
     console.log(
-      chalk.white("Generated file: ") + chalk.yellow("crudius-output.zip\n")
+      chalk.white("Generated file: ") + chalk.yellow(outputPath + "\n")
     );
   } catch (err) {
-    console.error(
-      chalk.redBright("\n Error while processing configuration file:\n"),
-      err
-    );
+    console.error(chalk.redBright("\nError during code generation:\n"), err);
+
+    if (fs.existsSync(outputPath)) {
+      fs.unlinkSync(outputPath);
+      console.log(chalk.yellow("Partial output removed.\n"));
+    }
+
+    return;
   }
 }

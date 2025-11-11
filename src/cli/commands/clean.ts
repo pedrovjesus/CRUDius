@@ -13,6 +13,7 @@ export async function runClean() {
 
   const filesToRemove = [
     "crudius-output.zip",
+    "crudius.config.json",
     "crudius.config.json.bak",
     "dist",
     "build",
