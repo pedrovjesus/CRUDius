@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import { Command } from "commander";
+import { runClean } from "./commands/clean";
+import { runGenerate } from "./commands/generate";
 import { runInit } from "./commands/init";
 import { runInitJson } from "./commands/init-json";
-import { runClean } from "./commands/clean";
 import { runValidate } from "./commands/validate";
 
 const program = new Command();
@@ -31,5 +32,10 @@ program
   .command("validate")
   .description("Validate the crudius.config.json file")
   .action(runValidate);
+
+program
+  .command("generate")
+  .description("Generate CRUD crudius.config.json file ")
+  .action(runGenerate);
 
 program.parse(process.argv);
