@@ -53,6 +53,24 @@ export class GeneratorDefault {
         outputPath: "src",
         data: {},
       },
+      {
+        templateName: "types-template-knex.ejs",
+        outputFileName: "knex.d.ts",
+        outputPath: "src/database/knex/@types",
+        data: {},
+      },
+      {
+        templateName: "index-knex.ejs",
+        outputFileName: "index.ts",
+        outputPath: "src/database/knex",
+        data: {},
+      },
+      {
+        templateName: "Environment-knex.ejs",
+        outputFileName: "index.ts",
+        outputPath: "src/database/knex",
+        data: {},
+      },
     ]);
   }
 
