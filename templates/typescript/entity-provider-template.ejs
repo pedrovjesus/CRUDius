@@ -1,0 +1,117 @@
+<%# path: database/provider %>
+import { ETableNames } from "../../database/ETableNames";
+import { Knex } from "../../database/knex";
+import { <%= entityName %> } from "../../models/<%= entityName %>";
+
+export class <%= entityName %>Provider {
+
+  async count(filter = ""): Promise<number | Error> {
+    try {
+      const [{ count }] = await Knex(ETableNames.<%= entityName.toLowerCase() %>)
+        .where("nome", "like", `%${filter}%`)
+        .count<[{ count: number }]>("* as count");
+
+      if (Number.isInteger(Number(count))) return Number(count);
+
+      return new Error("Erro ao consultar a quantidade total de registros");
+    } catch (error) {
+      console.error(error);
+      return new Error("Erro ao consultar a quantidade total de registros");
+    }
+  }
+
+  async create(data: Omit<<%= entityName %>, "id">): Promise<number | Error> {
+    try {
+      const [result] = await Knex(ETableNames.<%= entityName.toLowerCase() %>)
+        .insert(data)
+        .returning("id");
+
+      if (typeof result === "object") return result.id;
+      if (typeof result === "number") return result;
+
+      return new Error("Erro ao cadastrar o registro");
+    } catch (error) {
+      console.error(error);
+      return new Error("Erro ao cadastrar o registro");
+    }
+  }
+
+  async getAll(
+    page: number,
+    limit: number,
+    filter: string,
+    id = 0
+  ): Promise<<%= entityName %>[] | Error> {
+    try {
+      const result = await Knex(ETableNames.<%= entityName.toLowerCase() %>)
+        .select("*")
+        .where("id", Number(id))
+        .orWhere("nome", "like", `%${filter}%`)
+        .offset((page - 1) * limit)
+        .limit(limit);
+
+      if (id > 0 && result.every(item => item.id !== id)) {
+        const resultById = await Knex(ETableNames.<%= entityName.toLowerCase() %>)
+          .select("*")
+          .where("id", id)
+          .first();
+
+        if (resultById) return [...result, resultById];
+      }
+
+      return result;
+    } catch (error) {
+      console.error(error);
+      return new Error("Erro ao consultar registro");
+    }
+  }
+
+  async getById(id: number): Promise<<%= entityName %> | Error> {
+    try {
+      const result = await Knex(ETableNames.<%= entityName.toLowerCase() %>)
+        .select("*")
+        .where("id", id)
+        .first();
+
+      if (result) return result;
+
+      return new Error("Registro não encontrado");
+    } catch (error) {
+      console.error(error);
+      return new Error("Erro ao buscar registro");
+    }
+  }
+
+  async updateById(
+    id: number,
+    data: Omit<<%= entityName %>, "id">
+  ): Promise<void | Error> {
+    try {
+      const result = await Knex(ETableNames.<%= entityName.toLowerCase() %>)
+        .update(data)
+        .where("id", id);
+
+      if (result > 0) return;
+
+      return new Error("Erro ao atualizar registro");
+    } catch (error) {
+      console.error(error);
+      return new Error("Erro ao atualizar registro");
+    }
+  }
+
+  async deleteById(id: number): Promise<void | Error> {
+    try {
+      const result = await Knex(ETableNames.<%= entityName.toLowerCase() %>)
+        .delete()
+        .where("id", id);
+
+      if (result > 0) return;
+
+      return new Error("Erro ao deletar registro");
+    } catch (error) {
+      console.error(error);
+      return new Error("Erro ao deletar registro");
+    }
+  }
+}
