@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
-import * as <%= entityName %>Service from '../../services/<%= entityName %>/<%= entityName %>.service';
+import { <%= entityName %>Provider } from '../../services/<%= entityName %>/<%= entityName %>.service';
+
+const <%= entityName.toLowerCase() %>Provider = new <%= entityName %>Provider();
 
 export class <%= entityName %>Controller {
 
@@ -7,7 +9,7 @@ export class <%= entityName %>Controller {
     try {
       const { page = 1, limit = 10, filter = '' } = req.query;
 
-      const result = await <%= entityName %>Service.getAll(
+      const result = await <%= entityName.toLowerCase() %>Provider.getAll(
         Number(page),
         Number(limit),
         String(filter)
@@ -29,7 +31,7 @@ export class <%= entityName %>Controller {
     try {
       const id = Number(req.params.id);
 
-      const result = await <%= entityName %>Service.getById(id);
+      const result = await <%= entityName.toLowerCase() %>Provider.getById(id);
 
       if (result instanceof Error) {
         res.status(404).json(result.message);
@@ -45,7 +47,7 @@ export class <%= entityName %>Controller {
 
   public async create(req: Request, res: Response): Promise<void> {
     try {
-      const result = await <%= entityName %>Service.create(req.body);
+      const result = await <%= entityName.toLowerCase() %>Provider.create(req.body);
 
       if (result instanceof Error) {
         res.status(500).json(result.message);
@@ -63,7 +65,7 @@ export class <%= entityName %>Controller {
     try {
       const id = Number(req.params.id);
 
-      const result = await <%= entityName %>Service.updateById(id, req.body);
+      const result = await <%= entityName.toLowerCase() %>Provider.updateById(id, req.body);
 
       if (result instanceof Error) {
         res.status(500).json(result.message);
@@ -81,7 +83,7 @@ export class <%= entityName %>Controller {
     try {
       const id = Number(req.params.id);
 
-      const result = await <%= entityName %>Service.deleteById(id);
+      const result = await <%= entityName.toLowerCase() %>Provider.deleteById(id);
 
       if (result instanceof Error) {
         res.status(500).json(result.message);

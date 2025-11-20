@@ -1,6 +1,6 @@
 <%# path: database/knex/@types %>
 <% entities.forEach(entity => { %>
-import { <%= entity.name %> } from "../../models/<%= entity.name %>.model";
+import { <%= entity.name %> } from "../../entities/<%= entity.name %>.model";
 <% }) %>
 
 declare module "knex/types/tables" {
