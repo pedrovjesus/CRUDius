@@ -1,8 +1,6 @@
 import fs, { createWriteStream } from "fs";
 import chalk from "chalk";
-import { runValidate } from "./validate";
 import { GenerationService } from "../../core/GenerationService";
-import { RootConfig } from "../../interfaces/rootConfig.interface";
 import { validateConfig } from "../utils/validateConfig";
 
 /**

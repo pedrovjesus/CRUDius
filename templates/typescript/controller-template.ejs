@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as <%= entityName %>Provider from '../../providers/<%= entityName %>/<%= entityName %>.provider';
+import * as <%= entityName %>Service from '../../services/<%= entityName %>/<%= entityName %>.service';
 
 export class <%= entityName %>Controller {
 
@@ -7,7 +7,7 @@ export class <%= entityName %>Controller {
     try {
       const { page = 1, limit = 10, filter = '' } = req.query;
 
-      const result = await <%= entityName %>Provider.getAll(
+      const result = await <%= entityName %>Service.getAll(
         Number(page),
         Number(limit),
         String(filter)
@@ -29,7 +29,7 @@ export class <%= entityName %>Controller {
     try {
       const id = Number(req.params.id);
 
-      const result = await <%= entityName %>Provider.getById(id);
+      const result = await <%= entityName %>Service.getById(id);
 
       if (result instanceof Error) {
         res.status(404).json(result.message);
@@ -45,7 +45,7 @@ export class <%= entityName %>Controller {
 
   public async create(req: Request, res: Response): Promise<void> {
     try {
-      const result = await <%= entityName %>Provider.create(req.body);
+      const result = await <%= entityName %>Service.create(req.body);
 
       if (result instanceof Error) {
         res.status(500).json(result.message);
@@ -63,7 +63,7 @@ export class <%= entityName %>Controller {
     try {
       const id = Number(req.params.id);
 
-      const result = await <%= entityName %>Provider.updateById(id, req.body);
+      const result = await <%= entityName %>Service.updateById(id, req.body);
 
       if (result instanceof Error) {
         res.status(500).json(result.message);
@@ -81,7 +81,7 @@ export class <%= entityName %>Controller {
     try {
       const id = Number(req.params.id);
 
-      const result = await <%= entityName %>Provider.deleteById(id);
+      const result = await <%= entityName %>Service.deleteById(id);
 
       if (result instanceof Error) {
         res.status(500).json(result.message);
