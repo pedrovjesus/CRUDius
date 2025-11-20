@@ -52,7 +52,7 @@ export class FileGeneratorApp {
           const content = await this.renderer.render(templateFile, data);
           generatedFiles.push({ path: relativePath, content });
         } catch (error: any) {
-          console.error(`❌ Error generating ${relativePath}:`, error.message);
+          console.error(` Error generating ${relativePath}:`, error.message);
           throw error;
         }
       }

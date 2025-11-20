@@ -9,8 +9,9 @@ export class EntityFileGenerator {
   ): Promise<GeneratedFile[]> {
     const allFiles: GeneratedFile[] = [];
 
-    for (const entity of entities) {
+    for (const [index, entity] of entities.entries()) {
       const ext = entity.extension || ".ts";
+      const number = String(index).padStart(3, "0");
 
       const entityFiles = await this.fileGenerator.generate([
         {
@@ -35,6 +36,12 @@ export class EntityFileGenerator {
               extension: ext,
               outputPath: `src/entities`,
             },
+            {
+              templateName: "migration-template",
+              outputFileName: `${number}_create_${entity.name}.migration`,
+              extension: ext,
+              outputPath: `src/database/migrations`,
+            }
           ],
         },
       ]);

@@ -18,54 +18,71 @@ export class TypeScriptGenerator {
     );
   }
 
+  private appendFiles(files: GeneratedFile[]) {
+    files.forEach((f) => this.archive.append(f.content, { name: f.path }));
+  }
+
   public async generate(json: RootConfig): Promise<void> {
     const fileGenerator = new FileGeneratorApp(this.templatesDir);
     const defaultGenerator = new GeneratorDefault(this.templatesDir);
     const entityGenerator = new EntityFileGenerator(fileGenerator);
 
-    const defaultFiles = await defaultGenerator.generateTypescript();
-    defaultFiles.forEach((file) =>
-      this.archive.append(file.content, { name: file.path })
-    );
+    this.appendFiles(await defaultGenerator.generateTypescript());
 
     for (const config of json.generationConfigs) {
-      const files = await fileGenerator.generate([config]);
-      files.forEach((file) =>
-        this.archive.append(file.content, { name: file.path })
-      );
+      this.appendFiles(await fileGenerator.generate([config]));
     }
 
-    const entityNames = json.generationConfigs.map((cfg) => ({
+    const entityNames = json.generationConfigs.map((cfg, index) => ({
       name: cfg.entityName,
       extension: ".ts",
       properties: cfg.properties,
+      index,
     }));
 
-    const entityFiles = await entityGenerator.generateEntities(entityNames);
-    entityFiles.forEach((file) =>
-      this.archive.append(file.content, { name: file.path })
-    );
+    this.appendFiles(await entityGenerator.generateEntities(entityNames));
 
-    const routeFiles = await fileGenerator.generate(
-      [
-        {
-          entityName: "Routes",
-          properties: [],
-          filesToGenerate: [
-            {
-              templateName: "routes-template",
-              outputFileName: "routes",
-              extension: ".ts",
-              outputPath: "src/routes",
-            },
-          ],
-        },
-      ],
-      { entities: entityNames }
-    );
+    const extraFilesConfig = [
+      {
+        entityName: "Routes",
+        outputFileName: "routes",
+        templateName: "routes-template",
+        outputPath: "src/routes",
+      },
+      {
+        entityName: "ETableNames",
+        outputFileName: "ETableNames",
+        templateName: "Etables-knex",
+        outputPath: "src/database",
+      },
+      {
+        entityName: "typesKnex",
+        outputFileName: "knex.d",
+        templateName: "types-template-knex",
+        outputPath: "src/database/@types",
+      },
+    ];
 
-    routeFiles.forEach((file) =>
-      this.archive.append(file.content, { name: file.path })
-    );
+    for (const cfg of extraFilesConfig) {
+      const generated = await fileGenerator.generate(
+        [
+          {
+            entityName: cfg.entityName,
+            properties: [],
+            filesToGenerate: [
+              {
+                templateName: cfg.templateName,
+                outputFileName: cfg.outputFileName,
+                extension: ".ts",
+                outputPath: cfg.outputPath,
+              },
+            ],
+          },
+        ],
+        { entities: entityNames }
+      );
+
+      this.appendFiles(generated);
+    }
   }
 }
