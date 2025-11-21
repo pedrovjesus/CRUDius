@@ -5,13 +5,12 @@ import { RootConfig } from "../interfaces/rootConfig.interface";
 export class Validator {
   /**
    * Validates a property object.
-   * @param property 
+   * @param property
    * @returns validation property result
    */
   private static async IsValidProperty(
     property: IProperty
   ): Promise<string | boolean> {
-
     const validTypes = ["string", "number", "boolean", "array"];
     if (typeof property.field !== "string" || property.field.trim() === "") {
       return `There can be no empty fields in properties.`;
@@ -19,13 +18,22 @@ export class Validator {
     if (!validTypes.includes(property.type)) {
       return `The property ${property.field} has an invalid type.`;
     }
+    const booleanFields = ["searchable", "required"];
+
+    for (const boolKey of booleanFields) {
+      const value = (property as any)[boolKey];
+
+      if (value !== undefined && typeof value !== "boolean") {
+        return `The property "${boolKey}" in "${property.field}" must be true or false.`;
+      }
+    }
 
     return true;
   }
 
   /**
-   * 
-   * @param config 
+   *
+   * @param config
    * @returns validade entity
    */
   public static async IsValidGenerationConfig(

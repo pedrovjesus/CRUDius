@@ -7,10 +7,15 @@ export function runInitJson() {
       {
         entityName: "ExempleEntity",
         properties: [
-          { field: "id", type: "number", primary: true },
-          { field: "field", type: "string" },
-          { field: "price", type: "number" },
-          { field: "description", type: "string", optional: true },
+          { field: "id", type: "number", primary: true, searchable: false },
+          { field: "field", type: "string", searchable: true },
+          { field: "price", type: "number", searchable: false },
+          {
+            field: "description",
+            type: "string",
+            optional: true,
+            searchable: true,
+          },
         ],
         filesToGenerate: [],
       },
@@ -18,11 +23,16 @@ export function runInitJson() {
       {
         entityName: "User",
         properties: [
-          { field: "id", type: "number", primary: true },
-          { field: "name", type: "string" },
-          { field: "email", type: "string" },
-          { field: "password", type: "string" },
-          { field: "isAdmin", type: "boolean", optional: true },
+          { field: "id", type: "number", primary: true, searchable: false },
+          { field: "name", type: "string", searchable: true },
+          { field: "email", type: "string", searchable: true },
+          { field: "password", type: "string", searchable: false },
+          {
+            field: "isAdmin",
+            type: "boolean",
+            optional: true,
+            searchable: false,
+          },
         ],
         filesToGenerate: [],
       },
@@ -30,11 +40,11 @@ export function runInitJson() {
       {
         entityName: "Product",
         properties: [
-          { field: "id", type: "number", primary: true },
-          { field: "name", type: "string" },
-          { field: "price", type: "number" },
-          { field: "stock", type: "number" },
-          { field: "category", type: "string" },
+          { field: "id", type: "number", primary: true, searchable: false },
+          { field: "name", type: "string", searchable: true },
+          { field: "price", type: "number", searchable: false },
+          { field: "stock", type: "number", searchable: false },
+          { field: "category", type: "string", searchable: true },
         ],
         filesToGenerate: [],
       },
@@ -42,11 +52,16 @@ export function runInitJson() {
       {
         entityName: "Order",
         properties: [
-          { field: "id", type: "number", primary: true },
-          { field: "userId", type: "number" },
-          { field: "total", type: "number" },
-          { field: "status", type: "string" },
-          { field: "createdAt", type: "string", optional: true },
+          { field: "id", type: "number", primary: true, searchable: false },
+          { field: "userId", type: "number", searchable: false },
+          { field: "total", type: "number", searchable: false },
+          { field: "status", type: "string", searchable: true },
+          {
+            field: "createdAt",
+            type: "string",
+            optional: true,
+            searchable: false,
+          },
         ],
         filesToGenerate: [],
       },
@@ -54,9 +69,14 @@ export function runInitJson() {
       {
         entityName: "Category",
         properties: [
-          { field: "id", type: "number", primary: true },
-          { field: "name", type: "string" },
-          { field: "description", type: "string", optional: true },
+          { field: "id", type: "number", primary: true, searchable: false },
+          { field: "name", type: "string", searchable: true },
+          {
+            field: "description",
+            type: "string",
+            optional: true,
+            searchable: true,
+          },
         ],
         filesToGenerate: [],
       },

@@ -4,4 +4,5 @@ export interface IProperty {
   isOptional?: boolean;
   primary?: boolean;
   required?: boolean;
+  searchable?: boolean;
 }

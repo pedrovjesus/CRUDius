@@ -13,9 +13,6 @@ export class FileGeneratorApp {
     this.renderer = new EjsTemplateRenderer(templatesDir);
   }
 
-  /**
-   * Generates all files based on the list of settings provided.
-   */
   public async generate(
     configs: IGenerationConfig[],
     extraData?: ExtraData
@@ -24,6 +21,10 @@ export class FileGeneratorApp {
 
     for (const config of configs) {
       const { entityName, properties, filesToGenerate } = config;
+
+      const searchableFields = properties
+        .filter((p: any) => p.searchable)
+        .map((p) => p.field);
 
       for (const file of filesToGenerate) {
         const templateFile = file.templateName.endsWith(".ejs")
@@ -44,6 +45,7 @@ export class FileGeneratorApp {
         const data = {
           entityName,
           properties,
+          searchableFields,
           extension,
           ...(extraData || {}),
         };

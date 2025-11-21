@@ -5,15 +5,31 @@ import { <%= entityName %> } from "../../entities/<%= entityName %>.entity";
 
 export class <%= entityName %>Provider {
 
+  private searchableFields = <%- JSON.stringify(searchableFields) %>;
+
+  private applySearch(query: any, filter: string) {
+    if (!filter || this.searchableFields.length === 0) return query;
+
+    return query.where((qb: any) => {
+      this.searchableFields.forEach((field, index) => {
+        if (index === 0) {
+          qb.where(field, "like", `%${filter}%`);
+        } else {
+          qb.orWhere(field, "like", `%${filter}%`);
+        }
+      });
+    });
+  }
+
   async count(filter = ""): Promise<number | Error> {
     try {
-      const [{ count }] = await Knex(ETableNames.<%= entityName.toLowerCase() %>)
-        .where("nome", "like", `%${filter}%`)
-        .count<[{ count: number }]>("* as count");
+      let query = Knex(ETableNames.<%= entityName.toLowerCase() %>).count<{ count: number }>({ count: "*" });
 
-      if (Number.isInteger(Number(count))) return Number(count);
+      query = this.applySearch(query, filter);
 
-      return new Error("Erro ao consultar a quantidade total de registros");
+      const [{ count }] = await query;
+
+      return Number(count);
     } catch (error) {
       console.error(error);
       return new Error("Erro ao consultar a quantidade total de registros");
@@ -43,12 +59,17 @@ export class <%= entityName %>Provider {
     id = 0
   ): Promise<<%= entityName %>[] | Error> {
     try {
-      const result = await Knex(ETableNames.<%= entityName.toLowerCase() %>)
-        .select("*")
-        .where("id", Number(id))
-        .orWhere("nome", "like", `%${filter}%`)
+      let query = Knex(ETableNames.<%= entityName.toLowerCase() %>).select("*");
+
+      if (id > 0) {
+        query = query.where("id", id);
+      }
+
+      query = this.applySearch(query, filter)
         .offset((page - 1) * limit)
         .limit(limit);
+
+      const result = await query;
 
       if (id > 0 && result.every(item => item.id !== id)) {
         const resultById = await Knex(ETableNames.<%= entityName.toLowerCase() %>)
@@ -62,7 +83,7 @@ export class <%= entityName %>Provider {
       return result;
     } catch (error) {
       console.error(error);
-      return new Error("Erro ao consultar registro");
+      return new Error("Erro ao consultar registros");
     }
   }
 
@@ -73,9 +94,7 @@ export class <%= entityName %>Provider {
         .where("id", id)
         .first();
 
-      if (result) return result;
-
-      return new Error("Registro não encontrado");
+      return result || new Error("Registro não encontrado");
     } catch (error) {
       console.error(error);
       return new Error("Erro ao buscar registro");

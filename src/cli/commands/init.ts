@@ -35,6 +35,7 @@ export async function runInit() {
       type: "number",
       primary: true,
       isOptional: false,
+      searchable: false,
     });
 
     console.log(
@@ -53,49 +54,58 @@ export async function runInit() {
     let addAnotherProperty = true;
 
     while (addAnotherProperty) {
-      const { field, type, optional, moreFields } = await inquirer.prompt<{
-        field: string;
-        type: string;
-        optional: boolean;
-        moreFields: boolean;
-      }>([
-        {
-          type: "input",
-          name: "field",
-          message: "Field name:",
-          validate: (input) => {
-            const name = input.trim();
-            if (name === "") return "Field name cannot be empty.";
-            if (name.toLowerCase() === "id")
-              return "The 'id' field is already created automatically.";
-            return true;
+      const { field, type, optional, searchable, moreFields } =
+        await inquirer.prompt<{
+          field: string;
+          type: string;
+          optional: boolean;
+          searchable: boolean;
+          moreFields: boolean;
+        }>([
+          {
+            type: "input",
+            name: "field",
+            message: "Field name:",
+            validate: (input) => {
+              const name = input.trim();
+              if (name === "") return "Field name cannot be empty.";
+              if (name.toLowerCase() === "id")
+                return "The 'id' field is already created automatically.";
+              return true;
+            },
           },
-        },
-        {
-          type: "list",
-          name: "type",
-          message: "Field type:",
-          choices: ["string", "number", "boolean", "date"],
-        },
-        {
-          type: "confirm",
-          name: "optional",
-          message: "Is this field optional?",
-          default: false,
-        },
-        {
-          type: "confirm",
-          name: "moreFields",
-          message: "Add another field?",
-          default: false,
-        },
-      ]);
+          {
+            type: "list",
+            name: "type",
+            message: "Field type:",
+            choices: ["string", "number", "boolean", "date"],
+          },
+          {
+            type: "confirm",
+            name: "optional",
+            message: "Is this field optional?",
+            default: false,
+          },
+          {
+            type: "confirm",
+            name: "searchable",
+            message: "Is this field searchable?",
+            default: false,
+          },
+          {
+            type: "confirm",
+            name: "moreFields",
+            message: "Add another field?",
+            default: false,
+          },
+        ]);
 
       const property: IProperty = {
         field,
         type: type as "string" | "number" | "boolean",
         primary: false,
         isOptional: optional,
+        searchable,
       };
 
       properties.push(property);
@@ -127,7 +137,6 @@ export async function runInit() {
 
   const config: RootConfig = { generationConfigs };
 
-  // 💾 Save JSON for user reference
   fs.writeFileSync("crudius.config.json", JSON.stringify(config, null, 2));
   console.log(chalk.green("\n Configuration saved to crudius.config.json\n"));
 
