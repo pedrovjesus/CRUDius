@@ -7,15 +7,14 @@ import chalk from "chalk";
  * Removes generated files and output artifacts
  */
 export async function runClean() {
-  console.log(
-    chalk.blueBright.bold("Cleaning Crudius generated files...\n")
-  );
+  console.log(chalk.blueBright.bold("Cleaning Crudius generated files...\n"));
 
   const filesToRemove = [
     "crudius-output.zip",
     "crudius.config.json",
     "crudius.config.json.bak",
     "dist",
+    "crudius-output",
     "build",
   ];
 
