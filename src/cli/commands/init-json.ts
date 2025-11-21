@@ -14,6 +14,52 @@ export function runInitJson() {
         ],
         filesToGenerate: [],
       },
+
+      {
+        entityName: "User",
+        properties: [
+          { field: "id", type: "number", primary: true },
+          { field: "name", type: "string" },
+          { field: "email", type: "string" },
+          { field: "password", type: "string" },
+          { field: "isAdmin", type: "boolean", optional: true },
+        ],
+        filesToGenerate: [],
+      },
+
+      {
+        entityName: "Product",
+        properties: [
+          { field: "id", type: "number", primary: true },
+          { field: "name", type: "string" },
+          { field: "price", type: "number" },
+          { field: "stock", type: "number" },
+          { field: "category", type: "string" },
+        ],
+        filesToGenerate: [],
+      },
+
+      {
+        entityName: "Order",
+        properties: [
+          { field: "id", type: "number", primary: true },
+          { field: "userId", type: "number" },
+          { field: "total", type: "number" },
+          { field: "status", type: "string" },
+          { field: "createdAt", type: "string", optional: true },
+        ],
+        filesToGenerate: [],
+      },
+
+      {
+        entityName: "Category",
+        properties: [
+          { field: "id", type: "number", primary: true },
+          { field: "name", type: "string" },
+          { field: "description", type: "string", optional: true },
+        ],
+        filesToGenerate: [],
+      },
     ],
   };
 

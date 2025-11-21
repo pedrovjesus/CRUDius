@@ -1,5 +1,4 @@
 import { Router } from 'express';
-
 <% entities.forEach(entity => { %>
 import { <%= entity.name %>Controller } from '../controllers/<%= entity.name %>/<%= entity.name %>.controller';
 const <%= entity.name.toLowerCase() %>Controller = new <%= entity.name %>Controller();
@@ -8,15 +7,52 @@ const <%= entity.name.toLowerCase() %>Controller = new <%= entity.name %>Control
 const router = Router();
 
 router.get('/', (_, res) => {
-return res.send('Default input');
+  return res.send('Default input');
 });
-
 <% entities.forEach(entity => { %>
-// rotas de <%= entity.name.toLowerCase() %>
+/**
+ * @swagger
+ * /<%= entity.name.toLowerCase() %>:
+ *   get:
+ *     summary: Lista todos <%= entity.name.toLowerCase() %>
+ *     tags: [<%= entity.name %>]
+ */
 router.get('/<%= entity.name.toLowerCase() %>', <%= entity.name.toLowerCase() %>Controller.getAll.bind(<%= entity.name.toLowerCase() %>Controller));
+
+/**
+ * @swagger
+ * /<%= entity.name.toLowerCase() %>/{id}:
+ *   get:
+ *     summary: Busca um <%= entity.name.toLowerCase() %> pelo ID
+ *     tags: [<%= entity.name %>]
+ */
 router.get('/<%= entity.name.toLowerCase() %>/:id', <%= entity.name.toLowerCase() %>Controller.getById.bind(<%= entity.name.toLowerCase() %>Controller));
+
+/**
+ * @swagger
+ * /<%= entity.name.toLowerCase() %>/{id}:
+ *   put:
+ *     summary: Atualiza um <%= entity.name.toLowerCase() %> pelo ID
+ *     tags: [<%= entity.name %>]
+ */
 router.put('/<%= entity.name.toLowerCase() %>/:id', <%= entity.name.toLowerCase() %>Controller.updateById.bind(<%= entity.name.toLowerCase() %>Controller));
+
+/**
+ * @swagger
+ * /<%= entity.name.toLowerCase() %>/{id}:
+ *   delete:
+ *     summary: Remove um <%= entity.name.toLowerCase() %> pelo ID
+ *     tags: [<%= entity.name %>]
+ */
 router.delete('/<%= entity.name.toLowerCase() %>/:id', <%= entity.name.toLowerCase() %>Controller.deleteById.bind(<%= entity.name.toLowerCase() %>Controller));
+
+/**
+ * @swagger
+ * /<%= entity.name.toLowerCase() %>:
+ *   post:
+ *     summary: Cria um novo <%= entity.name.toLowerCase() %>
+ *     tags: [<%= entity.name %>]
+ */
 router.post('/<%= entity.name.toLowerCase() %>', <%= entity.name.toLowerCase() %>Controller.create.bind(<%= entity.name.toLowerCase() %>Controller));
 <% }); %>
 

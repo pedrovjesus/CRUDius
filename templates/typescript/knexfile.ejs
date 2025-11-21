@@ -1,0 +1,10 @@
+import type { Knex } from "knex";
+import * as config from "./src/database/knex/Environment";
+
+const knexConfig: { [key: string]: Knex.Config } = {
+  development: config.development,
+  test: config.test,
+  production: config.production,
+};
+
+export default knexConfig;

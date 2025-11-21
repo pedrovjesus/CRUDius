@@ -1,4 +1,7 @@
 import { server } from "./server";
+import { setupSwagger } from "./config/swagger";
+
+setupSwagger(server);
 
 const startServer = () => {
 server.listen(process.env.PORT || 3333, () => {

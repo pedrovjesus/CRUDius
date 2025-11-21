@@ -1,21 +1,25 @@
 {
-  "name": "<%= name.toLowerCase() %>",
-  "version": "<%= version %>",
-  "description": "<%= description %>",
-  "main": "<%= main %>",
-  "scripts": {
-    "start": "<%= scripts.start %>",
-    "build": "<%= scripts.build %>",
-    "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
-  },
-  "dependencies": {
-    <% Object.entries(dependencies).forEach(([key, version], i, arr) => { %>
-    "<%= key %>": "<%= version %>"<%= i < arr.length - 1 ? "," : "" %>
-    <% }) %>
-  },
-  "devDependencies": {
-    <% Object.entries(devDependencies).forEach(([key, version], i, arr) => { %>
-    "<%= key %>": "<%= version %>"<%= i < arr.length - 1 ? "," : "" %>
-    <% }) %>
-  }
+"name": "<%= name.toLowerCase() %>",
+"version": "<%= version %>",
+"description": "<%= description %>",
+"main": "src/app.ts",
+"scripts": {
+"start": "tsx src/app.ts",
+"build": "tsc",
+"dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+"knex:migrate": "knex --knexfile ./src/database/knex/Environment.ts migrate:latest",
+"knex:seed": "knex --knexfile ./src/database/knex/Environment.ts seed:run",
+"knex:rollback": "knex --knexfile ./src/database/knex/Environment.ts migrate:rollback",
+"knex:rollback-all": "knex --knexfile ./src/database/knex/Environment.ts migrate:rollback --all"
+},
+"dependencies": {
+<% Object.entries(dependencies).forEach(([key, version], i, arr) => { %>
+"<%= key %>": "<%= version %>"<%= i < arr.length - 1 ? "," : "" %>
+<% }) %>
+},
+"devDependencies": {
+<% Object.entries(devDependencies).forEach(([key, version], i, arr) => { %>
+"<%= key %>": "<%= version %>"<%= i < arr.length - 1 ? "," : "" %>
+<% }) %>
+}
 }
