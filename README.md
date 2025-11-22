@@ -4,76 +4,92 @@
   <img src="./assets/crudius1.png" alt="Crudius Logo" width="140"/>
 </p>
 
-**CRUDius** is a **tool** built with **Node.js** and **TypeScript** that helps you automatically generate CRUD boilerplate code based on interactive prompts or a JSON configuration.
+<p align="center">
+  <a href="https://github.com/pedrovjesus/CRUDius/actions/workflows/ci.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/pedrovjesus/CRUDius/ci.yml?branch=main" alt="CI Status">
+  </a>
+  <a href="https://github.com/pedrovjesus/CRUDius/blob/main/LICENSE.md">
+    <img src="https://img.shields.io/github/license/pedrovjesus/CRUDius" alt="License">
+  </a>
+  <a href="https://www.npmjs.com/package/crudius">
+    <img src="https://img.shields.io/npm/v/crudius" alt="NPM Version">
+  </a>
+</p>
 
-Currently in **under development**, CRUDius aims to accelerate backend development by providing a fast way to scaffold standard CRUD code with minimal setup.
+**CRUDius** is a **Node.js + TypeScript CLI tool** that automatically generates CRUD boilerplate code based on interactive prompts or a JSON configuration.  
+
+> ⚠️ Currently under development. Features are evolving and more integrations are planned.
 
 ---
 
 ## Features
 
-* Interactive setup wizard (`crudius init`)
-* JSON-based configuration generation (`crudius init-json`)
-* Configuration validation (`crudius validate`)
-* Clean command for removing temporary files (`crudius clean`)
-* Generates a ready-to-use `.zip` with all source code
-* Written entirely in TypeScript for flexibility and future extensibility
+- Interactive setup wizard (`crudius init`)  
+- JSON-based configuration generation (`crudius init-json`)  
+- Configuration validation (`crudius validate`)  
+- Clean command to remove temporary files (`crudius clean`)  
+- Generates a ready-to-use `.zip` with full source code  
+- Written entirely in TypeScript for flexibility and extensibility  
 
-> Support for languages (python, php) and databases (e.g. Knex, Prisma, MongoDB) is **planned**, but not yet included in this version.
+> Planned: Support for other languages (Python, PHP) and databases (Knex, Prisma, MongoDB).
 
 ---
 
-## Installation
+## Quick Start
 
-Since this project is not yet published to npm, you can install it locally for development and testing.
+After downloading or cloning the project:
 
 ```bash
-git clone https://github.com/pedrovjesus/CRUDius.git
-cd CRUDius
+# 1. Install dependencies
 npm install
-npm run build
-npm link
-```
 
-This will make the `crudius` command available globally on your system.
+# 2. Build the project
+npm run build
+
+# 3. Link globally to use the `crudius` CLI
+npm link
+````
+
+> Now you can run `crudius` from anywhere.
 
 ---
 
 ## Usage
 
-### Initialize a new project interactively
+### 1. Initialize a new project interactively
 
 ```bash
 crudius init
 ```
 
-This command walks you through an interactive setup process to define your entities and their fields.
+* Walks you through prompts for entities and fields.
+* Generates a `crudius.config.json` file.
 
-Example session:
+**Example session:**
 
 ```
 Entity name: Product
 Field name: name
 Field type: string
+Is this field optional? No
+Is this field searchable? Yes
 Add another field? Yes
 Field name: price
 Field type: number
 Add another field? No
 ```
 
-At the end, a configuration file named `crudius.config.json` is generated, and you can optionally generate the project code immediately.
-
 ---
 
-### Generate from an existing configuration
+### 2. Generate from an existing JSON config
 
 ```bash
 crudius init-json
 ```
 
-This uses an existing configuration file to generate code directly.
+* Uses a JSON configuration file to generate the project automatically.
 
-**Example:**
+**Example `crudius.config.json`:**
 
 ```json
 {
@@ -92,23 +108,66 @@ This uses an existing configuration file to generate code directly.
 
 ---
 
-### Validate a configuration file
+### 3. Validate configuration
 
 ```bash
 crudius validate
 ```
 
-Validates your `crudius.config.json` structure using the built-in validator before attempting code generation.
+* Checks if your `crudius.config.json` follows the correct structure before generating code.
 
 ---
 
-### Clean generated files
+### 4. Clean generated files
 
 ```bash
 crudius clean
 ```
 
-Removes generated files (e.g. `crudius.config.json` and `crudius-output.zip`).
+* Removes generated files (`crudius.config.json`, `crudius-output.zip`, etc.)
+
+---
+
+## Generated Project Structure
+
+When generation completes, the `.zip` file contains:
+
+```
+/src
+  ├── controllers/
+  ├── routes/
+  ├── entities/
+  ├── services/
+  ├── database/
+  ├── server.ts
+  └── app.ts
+
+README.md
+```
+
+---
+
+## After Unzipping the Generated Project
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Run migrations using Knex:
+
+```bash
+npm run knex:migrate
+```
+
+3. Start the server:
+
+```bash
+npm run dev
+```
+
+> Your backend is now ready to test with CRUD endpoints.
 
 ---
 
@@ -120,35 +179,14 @@ Removes generated files (e.g. `crudius.config.json` and `crudius-output.zip`).
 | `crudius init-json` | Generate CRUD structure from JSON config |
 | `crudius validate`  | Validate existing configuration          |
 | `crudius clean`     | Remove generated and temporary files     |
-
----
-
-## Output Structure
-
-When generation is complete, a file named `crudius-output.zip` will be created with the following structure:
-
-```
-/src
-  ├── controllers/
-  ├── routes/
-  ├── entities/
-  └── index.ts
-README.md
-```
-
-The generated files currently follow a **generic boilerplate** structure in TypeScript.
-Database and framework integration (e.g. Express + Knex) will be introduced in future versions.
+| `crudius generate`  | Generate CRUD from JSON config           |
 
 ---
 
 ## Roadmap
 
-**Upcoming Features**
-
-* Add support for Express + Knex integration
-* Add relation handling (foreign keys)
-* Expand language support (PHP, Python)
-* Optional Swagger/OpenAPI documentation
+* Foreign key/relations support
+* Additional languages (PHP, Python)
 
 ---
 
@@ -157,7 +195,7 @@ Database and framework integration (e.g. Express + Knex) will be introduced in f
 * Rapid backend prototyping
 * Consistent project structure
 * Fully local, no server or internet required
-* Ideal for generating early MVP backends
+* Perfect for MVP development
 
 ---
 
