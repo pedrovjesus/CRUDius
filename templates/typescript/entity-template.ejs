@@ -1,5 +1,0 @@
-export interface <%= entityName %> {
-<% properties.forEach(prop => { %>
-<%= prop.field %><%= prop.isOptional ? "?" : "" %>: <%= prop.type %>;
-<% }) %>
-}

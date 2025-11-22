@@ -5,9 +5,6 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/pedrovjesus/CRUDius/actions/workflows/ci.yml">
-    <img src="https://img.shields.io/github/actions/workflow/status/pedrovjesus/CRUDius/ci.yml?branch=main" alt="CI Status">
-  </a>
   <a href="https://github.com/pedrovjesus/CRUDius/blob/main/LICENSE.md">
     <img src="https://img.shields.io/github/license/pedrovjesus/CRUDius" alt="License">
   </a>
@@ -16,7 +13,7 @@
   </a>
 </p>
 
-**CRUDius** is a **Node.js + TypeScript CLI tool** that automatically generates CRUD boilerplate code based on interactive prompts or a JSON configuration.  
+**CRUDius** is a **Node.js + TypeScript CLI tool** that automatically generates CRUD boilerplate code based on interactive prompts or a JSON configuration.
 
 > ⚠️ Currently under development. Features are evolving and more integrations are planned.
 
@@ -28,16 +25,28 @@
 - JSON-based configuration generation (`crudius init-json`)  
 - Configuration validation (`crudius validate`)  
 - Clean command to remove temporary files (`crudius clean`)  
-- Generates a ready-to-use `.zip` with full source code  
+- Generates a ready-to-use `.zip` with full source code
+- Supports Express.js with Knex.js
+- Modular project structure (controllers, routes, services, entities)
+- Documented code generation for easy understanding
 - Written entirely in TypeScript for flexibility and extensibility  
 
 > Planned: Support for other languages (Python, PHP) and databases (Knex, Prisma, MongoDB).
 
 ---
 
+## Installation
+
+You can install CRUDius **globally** to use it anywhere:
+
+```bash
+npm install -g crudius
+````
+---
+
 ## Quick Start
 
-After downloading or cloning the project:
+After cloning the repository:
 
 ```bash
 # 1. Install dependencies
@@ -46,9 +55,9 @@ npm install
 # 2. Build the project
 npm run build
 
-# 3. Link globally to use the `crudius` CLI
+# 3. (Optional) Link globally to test locally
 npm link
-````
+```
 
 > Now you can run `crudius` from anywhere.
 
@@ -185,8 +194,9 @@ npm run dev
 
 ## Roadmap
 
-* Foreign key/relations support
+* Foreign key / relations support
 * Additional languages (PHP, Python)
+* More database integrations (Prisma, MongoDB)
 
 ---
 
@@ -202,3 +212,4 @@ npm run dev
 ## License
 
 [MIT](./LICENSE.md) © [Pedro Jesus](https://github.com/pedrovjesus)
+
