@@ -12,7 +12,6 @@ export class TypeScriptGenerator {
     this.templatesDir = path.join(
       __dirname,
       "..",
-      "..",
       "templates",
       "typescript"
     );

@@ -1,0 +1,7 @@
+<%# path: database/ %>
+
+export enum ETableNames {
+<% entities.forEach(entity => { %>
+<%= entity.name.toLowerCase() %> = "<%= entity.name.toLowerCase() %>",
+<% }) %>
+}

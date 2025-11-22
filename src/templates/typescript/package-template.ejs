@@ -1,0 +1,25 @@
+{
+"name": "<%= name.toLowerCase() %>",
+"version": "<%= version %>",
+"description": "<%= description %>",
+"main": "src/app.ts",
+"scripts": {
+"start": "tsx src/app.ts",
+"build": "tsc",
+"dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+"knex:migrate": "knex migrate:latest",
+"knex:seed": "knex seed:run",
+"knex:rollback": "knex migrate:rollback",
+"knex:rollback-all": "knex migrate:rollback --all"
+},
+"dependencies": {
+<% Object.entries(dependencies).forEach(([key, version], i, arr) => { %>
+"<%= key %>": "<%= version %>"<%= i < arr.length - 1 ? "," : "" %>
+<% }) %>
+},
+"devDependencies": {
+<% Object.entries(devDependencies).forEach(([key, version], i, arr) => { %>
+"<%= key %>": "<%= version %>"<%= i < arr.length - 1 ? "," : "" %>
+<% }) %>
+}
+}
