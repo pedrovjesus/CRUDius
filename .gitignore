@@ -3,6 +3,7 @@
 /node_modules
 /build
 /crudius-output
+/test
 
 # Logs
 logs
