@@ -1,7 +1,7 @@
 # CRUDius CLI
 
 <p align="center">
-  <img src="./assets/crudius1.png" alt="Crudius Logo" width="140"/>
+  <img src="./src/assets/crudius1.png" alt="Crudius Logo" width="140"/>
 </p>
 
 <p align="center">
@@ -33,6 +33,13 @@
 
 > Planned: Support for other languages (Python, PHP) and databases (Knex, Prisma, MongoDB).
 
+---
+## Recent Updates
+
+- Added initial support for belongsTo relations in entities
+- Improved migration generator to avoid duplicated foreign key fields
+- Enhanced validation step for entity relations
+- Internal refactor of template rendering logic for better stability
 ---
 
 ## Installation
