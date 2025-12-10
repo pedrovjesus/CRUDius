@@ -5,7 +5,12 @@ export class EntityFileGenerator {
   constructor(private fileGenerator: FileGeneratorApp) {}
 
   public async generateEntities(
-    entities: { name: string; extension?: string; properties: IProperty[] }[]
+    entities: {
+      name: string;
+      extension?: string;
+      properties: IProperty[];
+      relations?: any[];
+    }[]
   ): Promise<GeneratedFile[]> {
     const allFiles: GeneratedFile[] = [];
 
@@ -14,6 +19,7 @@ export class EntityFileGenerator {
         name: e.name,
         extension: e.extension || ".ts",
         properties: e.properties,
+        relations: e.relations ?? [],
       })),
     };
 
@@ -21,11 +27,18 @@ export class EntityFileGenerator {
       const ext = entity.extension || ".ts";
       const number = String(index).padStart(3, "0");
 
+      const cleanedProperties = entity.properties.filter((p) => {
+        return !(entity.relations ?? []).some(
+          (r) => r.type === "belongsTo" && r.field === p.field
+        );
+      });
+
       const entityFiles = await this.fileGenerator.generate(
         [
           {
             entityName: entity.name,
-            properties: entity.properties,
+            properties: cleanedProperties,
+            relations: entity.relations ?? [],
             filesToGenerate: [
               {
                 templateName: "controller-template",
