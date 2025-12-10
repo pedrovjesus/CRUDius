@@ -29,6 +29,25 @@ export async function up(knex: Knex) {
         <% } %>
       <% }) %>
 
+      <% /* relations: generate FK for belongsTo relations */ %>
+      <% if (relations && relations.length > 0) { %>
+        <% relations.forEach(rel => { %>
+          <% if (rel.type === "belongsTo") { %>
+            // Relation: belongsTo <%= rel.target %>
+            table.bigInteger("<%= rel.field %>")
+              .unsigned()
+              .index()
+              <%= rel.isOptional ? "" : ".notNullable()" %>;
+
+            table
+              .foreign("<%= rel.field %>")
+              .references("id")
+              .inTable(ETableNames.<%= rel.target.toLowerCase() %>)
+              .onDelete("CASCADE");
+          <% } %>
+        <% }) %>
+      <% } %>
+
       table.comment("Tabela gerada automaticamente para a entidade <%= entityName %>.");
     }
   );
