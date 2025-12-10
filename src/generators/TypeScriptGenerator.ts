@@ -9,12 +9,7 @@ export class TypeScriptGenerator {
   private readonly templatesDir: string;
 
   constructor(private readonly archive: Archiver) {
-    this.templatesDir = path.join(
-      __dirname,
-      "..",
-      "templates",
-      "typescript"
-    );
+    this.templatesDir = path.join(__dirname, "..", "templates", "typescript");
   }
 
   private appendFiles(files: GeneratedFile[]) {
@@ -36,6 +31,7 @@ export class TypeScriptGenerator {
       name: cfg.entityName,
       extension: ".ts",
       properties: cfg.properties,
+      relations: cfg.relations ?? [],
       index,
     }));
 

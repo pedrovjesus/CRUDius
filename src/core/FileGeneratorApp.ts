@@ -45,6 +45,7 @@ export class FileGeneratorApp {
         const data = {
           entityName,
           properties,
+          relations: config.relations ?? [],
           searchableFields,
           extension,
           ...(extraData || {}),
