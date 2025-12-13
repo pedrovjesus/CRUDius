@@ -9,8 +9,12 @@ export async function up(knex: Knex) {
 
       table.bigIncrements("id").primary().index();
 
+      <% /* =====================
+           PROPERTIES
+           ===================== */ %>
       <% properties.forEach(prop => { %>
         <% if (prop.field !== "id") { %>
+
           <% if (prop.type === "string") { %>
             table.string("<%= prop.field %>", 255)
               .checkLength("<=", 255)
@@ -26,12 +30,17 @@ export async function up(knex: Knex) {
           <% } else { %>
             table.string("<%= prop.field %>").index();
           <% } %>
+
         <% } %>
       <% }) %>
 
-      <% /* relations: generate FK for belongsTo relations */ %>
+      <% /* =====================
+           RELATIONS
+           ===================== */ %>
       <% if (relations && relations.length > 0) { %>
         <% relations.forEach(rel => { %>
+
+          <% /* -------- belongsTo (N:1) -------- */ %>
           <% if (rel.type === "belongsTo") { %>
             // Relation: belongsTo <%= rel.target %>
             table.bigInteger("<%= rel.field %>")
@@ -43,12 +52,57 @@ export async function up(knex: Knex) {
               .foreign("<%= rel.field %>")
               .references("id")
               .inTable(ETableNames.<%= rel.target.toLowerCase() %>)
-              .onDelete("CASCADE");
+              .onDelete("<%= rel.onDelete || "CASCADE" %>");
           <% } %>
+
+          <% /* -------- hasOne (1:1) -------- */ %>
+          <% if (rel.type === "hasOne") { %>
+            // Relation: hasOne <%= rel.target %>
+            table.bigInteger("<%= rel.field %>")
+              .unsigned()
+              .unique()
+              .index()
+              <%= rel.isOptional ? "" : ".notNullable()" %>;
+
+            table
+              .foreign("<%= rel.field %>")
+              .references("id")
+              .inTable(ETableNames.<%= rel.target.toLowerCase() %>)
+              .onDelete("<%= rel.onDelete || "CASCADE" %>");
+          <% } %>
+
+          <% /* -------- hasMany (1:N) -------- */ %>
+          <% if (rel.type === "hasMany") { %>
+            // Relation: hasMany <%= rel.target %>
+            // FK será criada na tabela <%= rel.target %>
+          <% } %>
+
+          <% /* -------- manyToMany (N:N) -------- */ %>
+          <% if (rel.type === "manyToMany") { %>
+            // Relation: manyToMany <%= rel.target %>
+            // Pivot table: <%= entityName.toLowerCase() %>_<%= rel.target.toLowerCase() %>
+            // Pivot table será criada em outra migration
+          <% } %>
+
+          <% /* -------- self relation -------- */ %>
+          <% if (rel.type === "self") { %>
+            // Relation: self (auto-relacionamento)
+            table.bigInteger("<%= rel.field %>")
+              .unsigned()
+              .index()
+              <%= rel.isOptional ? "" : ".notNullable()" %>;
+
+            table
+              .foreign("<%= rel.field %>")
+              .references("id")
+              .inTable(ETableNames.<%= entityName.toLowerCase() %>)
+              .onDelete("<%= rel.onDelete || "SET NULL" %>");
+          <% } %>
+
         <% }) %>
       <% } %>
 
-      table.comment("Tabela gerada automaticamente para a entidade <%= entityName %>.");
+      table.comment("Table automatically generated for the entity <%= entityName %>.");
     }
   );
 
@@ -57,5 +111,7 @@ export async function up(knex: Knex) {
 
 export async function down(knex: Knex) {
   console.log(`# ⛔ Dropped table ${ETableNames.<%= entityName.toLowerCase() %>}`);
-  return await knex.schema.dropTable(ETableNames.<%= entityName.toLowerCase() %>);
+  return await knex.schema.dropTable(
+    ETableNames.<%= entityName.toLowerCase() %>
+  );
 }
