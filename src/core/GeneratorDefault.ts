@@ -40,6 +40,7 @@ export class GeneratorDefault {
             "@types/node": "^16.18.126",
             "@types/express": "^4.17.13",
             sqlite3: "^5.1.7",
+            prettier: "^3.7.4",
             tsx: "^4.16.2",
             "@types/pg": "^8.11.6",
             "@typescript-eslint/eslint-plugin": "^5.30.6",

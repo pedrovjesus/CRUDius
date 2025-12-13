@@ -6,6 +6,8 @@
 "scripts": {
 "start": "tsx src/app.ts",
 "build": "tsc",
+"initial": "npm install && npm run knex:migrate && npm run format",
+"format": "prettier \"src/**/*.{ts,js,json}\" --write",
 "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
 "knex:migrate": "knex migrate:latest",
 "knex:seed": "knex seed:run",
