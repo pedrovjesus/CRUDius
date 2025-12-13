@@ -10,10 +10,17 @@ export async function up(knex: Knex) {
       table.bigIncrements("id").primary().index();
 
       <% /* =====================
+           RELATION FIELDS (FKs)
+           ===================== */ %>
+      <%
+        const relationFields = (relations || []).map(r => r.field);
+      %>
+
+      <% /* =====================
            PROPERTIES
            ===================== */ %>
       <% properties.forEach(prop => { %>
-        <% if (prop.field !== "id") { %>
+        <% if (prop.field !== "id" && !relationFields.includes(prop.field)) { %>
 
           <% if (prop.type === "string") { %>
             table.string("<%= prop.field %>", 255)
@@ -102,7 +109,9 @@ export async function up(knex: Knex) {
         <% }) %>
       <% } %>
 
-      table.comment("Table automatically generated for the entity <%= entityName %>.");
+      table.comment(
+        "Table automatically generated for the entity <%= entityName %>."
+      );
     }
   );
 

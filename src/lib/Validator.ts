@@ -70,15 +70,6 @@ export class Validator {
       return `Relation field cannot be "id" in "${config.entityName}".`;
     }
 
-    const existsInProps = config.properties.some(
-      (p) => p.field === relation.field
-    );
-
-    // belongsTo MUST have the field inside properties
-    if (relation.type === "belongsTo" && !existsInProps) {
-      return `Relation field "${relation.field}" must exist in properties for belongsTo relation in "${config.entityName}".`;
-    }
-
     return true;
   }
 
