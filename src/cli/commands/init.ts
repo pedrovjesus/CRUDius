@@ -124,8 +124,18 @@ export async function runInit() {
           `\nNow, let's define the relations for ${chalk.yellow(entityName)}\n`
         )
       );
+      const { shouldAddRelation } = await inquirer.prompt<{
+        shouldAddRelation: boolean;
+      }>([
+        {
+          type: "confirm",
+          name: "shouldAddRelation",
+          message: `Do you want to add relations to other entities for "${entityName}"?`,
+          default: true,
+        },
+      ]);
 
-      let addAnotherRelation = true;
+      let addAnotherRelation = shouldAddRelation;
 
       while (addAnotherRelation) {
         const { type, target, field, isOptional, onDelete, moreRelations } =

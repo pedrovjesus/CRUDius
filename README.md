@@ -36,9 +36,11 @@
 ---
 ## Recent Updates
 
-- Added initial support for belongsTo relations in entities
+- Added support for relations in entities
 - Improved migration generator to avoid duplicated foreign key fields
 - Enhanced validation step for entity relations
+- Added prettier formatting to generated code
+- Fixed bugs in interactive prompt flow
 - Internal refactor of template rendering logic for better stability
 ---
 
