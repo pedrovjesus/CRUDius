@@ -6,6 +6,7 @@ import { RootConfig } from "../../interfaces/rootConfig.interface";
 import { IGenerationConfig } from "../../interfaces/generationConfig.interface";
 import { IProperty } from "../../interfaces/property.interface";
 import { IFileGenerate } from "../../interfaces/fileGenerate.interface";
+import { IRelations } from "../../interfaces/relations.interface";
 
 export async function runInit() {
   console.log(
@@ -50,6 +51,8 @@ export async function runInit() {
         `\nNow, let's define the other fields for ${chalk.yellow(entityName)}\n`
       )
     );
+    const getEntityNames = () =>
+      generationConfigs.map((config) => config.entityName);
 
     let addAnotherProperty = true;
 
@@ -112,11 +115,99 @@ export async function runInit() {
       addAnotherProperty = moreFields;
     }
 
+    const relations: IRelations[] = [];
+    const availableTargets = getEntityNames();
+
+    if (availableTargets.length > 0) {
+      console.log(
+        chalk.gray(
+          `\nNow, let's define the relations for ${chalk.yellow(entityName)}\n`
+        )
+      );
+
+      let addAnotherRelation = true;
+
+      while (addAnotherRelation) {
+        const { type, target, field, isOptional, onDelete, moreRelations } =
+          await inquirer.prompt<{
+            type: IRelations["type"];
+            target: string;
+            field: string;
+            isOptional: boolean;
+            onDelete: IRelations["onDelete"];
+            moreRelations: boolean;
+          }>([
+            {
+              type: "list",
+              name: "type",
+              message: "Relation type:",
+              choices: ["belongsTo", "hasOne", "hasMany", "manyToMany"],
+            },
+            {
+              type: "list",
+              name: "target",
+              message: "Target entity for this relation:",
+              choices: availableTargets,
+            },
+            {
+              type: "input",
+              name: "field",
+              message: "Relation field name in this entity:",
+              validate: (input) =>
+                input.trim() !== "" || "Relation field name cannot be empty.",
+            },
+            {
+              type: "confirm",
+              name: "isOptional",
+              message: "Is this relation optional (nullable foreign key)?",
+              default: false,
+              when: (answers) =>
+                answers.type === "belongsTo" || answers.type === "hasOne",
+            },
+            {
+              type: "list",
+              name: "onDelete",
+              message: "OnDelete rule (for belongsTo relations):",
+              choices: ["CASCADE", "RESTRICT", "SET NULL", "NO ACTION"],
+              default: "RESTRICT",
+              when: (answers) =>
+                answers.type === "belongsTo" || answers.type === "hasOne",
+            },
+            {
+              type: "confirm",
+              name: "moreRelations",
+              message: "Add another relation?",
+              default: false,
+            },
+          ]);
+
+        const relation: IRelations = {
+          type,
+          target,
+          field,
+          isOptional: isOptional !== undefined ? isOptional : false,
+          onDelete: onDelete !== undefined ? onDelete : "NO ACTION",
+        };
+
+        relations.push(relation);
+        addAnotherRelation = moreRelations;
+      }
+    } else {
+      console.log(
+        chalk.gray(
+          `\nSkipping relations for ${chalk.yellow(
+            entityName
+          )}: No other entities configured yet.`
+        )
+      );
+    }
+
     const filesToGenerate: IFileGenerate[] = [];
 
     const entityConfig: IGenerationConfig = {
       entityName,
       properties,
+      relations,
       filesToGenerate,
     };
 

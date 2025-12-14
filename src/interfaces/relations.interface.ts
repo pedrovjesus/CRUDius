@@ -1,5 +1,7 @@
 export interface IRelations {
-    type: string;
-    target: string;
-    field: string
+  type: "belongsTo" | "hasOne" | "hasMany" | "manyToMany";
+  target: string;
+  field: string;
+  isOptional: boolean;
+  onDelete: "CASCADE" | "RESTRICT" | "SET NULL" | "NO ACTION";
 }
