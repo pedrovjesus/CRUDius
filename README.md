@@ -15,7 +15,7 @@
 
 **CRUDius** is a **Node.js + TypeScript CLI tool** that automatically generates CRUD boilerplate code based on interactive prompts or a JSON configuration.
 
-> ⚠️ Currently under development. Features are evolving and more integrations are planned.
+> ⚠️ discontinued...
 
 ---
 
